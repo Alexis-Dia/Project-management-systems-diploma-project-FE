@@ -1,0 +1,51 @@
+.grid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 50px;
+  padding: 5px;
+  padding-bottom: 10px;
+}
+
+.gridChildren-grid {
+  text-align: center;
+}
+
+.grid-container1 {
+  padding-top: 10px;
+}
+
+.grid-container2 {
+  padding-top: 5px;
+}
+
+.card-style1 {
+margin: 10px;
+}
+
+.button1 {
+  padding: 1px;
+}
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.01); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.pagination-main-style-1 {
+  display: grid;
+  grid-template-columns: minmax(70px, 100px) 1fr minmax(200px, 250px) 1fr minmax(70px, 100px);
+}
+
+.pagination-main-style-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.current-page-main-style-1 {
+  padding-top: 12px;
+  display: grid;
+  text-align-last: center;
+}

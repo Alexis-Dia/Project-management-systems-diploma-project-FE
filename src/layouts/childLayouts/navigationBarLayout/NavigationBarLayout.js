@@ -16,11 +16,12 @@ import {
     ROLE_ADMIN,
     CREATE_TASK,
     CREATE_TASK_PAGE_PATH,
-    CREATE_CAR_PAGE_PATH,
-    VIEW_CARS_PAGE_PATH,
-    CREATE_CAR,
-    VIEW_CARS,
-    VIEW_ALL_DRIVERS_PAGE_PATH, VIEW_ALL_DRIVERS, VIEW_FREE_TASKS_PAGE_PATH, VIEW_FREE_TASKS
+    VIEW_ALL_DRIVERS_PAGE_PATH,
+    VIEW_ALL_DRIVERS,
+    VIEW_FREE_TASKS_PAGE_PATH,
+    VIEW_FREE_TASKS,
+    VIEW_PROJECTS_PAGE_PATH,
+    VIEW_FREE_PROJECTS_PAGE_PATH, VIEW_PROJECTS, VIEW_FREE_PROJECTS, CREATE_PROJECT_PAGE_PATH
 } from '../../../properties/properties'
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -96,6 +97,33 @@ class NavigationBarLayout extends Component {
         });
     };
 
+    onClickAllProjects = () => {
+        const path = VIEW_PROJECTS_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: VIEW_PROJECTS,
+        });
+    };
+
+    onClickFreeProjects = () => {
+        const path = VIEW_FREE_PROJECTS_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: VIEW_FREE_PROJECTS,
+        });
+    };
+
+    onClickCreateProject = () => {
+        const path = CREATE_PROJECT_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: CREATE_PROJECT,
+        });
+    };
+
     onClickAllTasks = () => {
         const path = VIEW_TASKS_PAGE_PATH;
         browserHistory.push(path);
@@ -120,24 +148,6 @@ class NavigationBarLayout extends Component {
         this.toggleDrawer();
         this.setState({
             currentPage: CREATE_TASK,
-        });
-    };
-
-    onClickCreateCar = () => {
-        const path = CREATE_CAR_PAGE_PATH;
-        browserHistory.push(path);
-        this.toggleDrawer();
-        this.setState({
-            currentPage: CREATE_CAR,
-        });
-    };
-
-    onClickViewCars = () => {
-        const path = VIEW_CARS_PAGE_PATH;
-        browserHistory.push(path);
-        this.toggleDrawer();
-        this.setState({
-            currentPage: VIEW_CARS,
         });
     };
 
@@ -199,7 +209,7 @@ class NavigationBarLayout extends Component {
                     <AppBar
                         /*title={<img src={require('./img/navigationBarLayout/OrangeryLogo.png')}/>}
                         titleStyle={{color: '#000000', fontSize: '18px'}}*/
-                        title='Carriages-system'
+                        title='Project management system'
                         style={{backgroundColor: '#ffffff', zIndex: 990}}
                         titleStyle={{color: '#02162c'}}
                         iconElementLeft={
@@ -231,7 +241,7 @@ class NavigationBarLayout extends Component {
             <MuiThemeProvider>
                 <AppBar
                     //title={<img src={require('./img/navigationBarLayout/OrangeryLogo.png')}/>}
-                    title='Carriages-system'
+                    title='Project management system'
                     style={{backgroundColor: '#ffffff', zIndex: 990}}
                     titleStyle={{color: '#02162c'}}
                     iconElementLeft={
@@ -325,15 +335,43 @@ class NavigationBarLayout extends Component {
                                                                     )
                                                                 }
 
+                                                                {(this.props.location.pathname === VIEW_PROJECTS_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="All projects"
+                                                                              onClick={this.onClickAllProjects}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="All projects"
+                                                                              onClick={this.onClickAllProjects}/>
+                                                                  )
+                                                                }
+
+                                                                {userStatus === 'FREE' && (
+                                                                  (this.props.location.pathname === VIEW_FREE_PROJECTS_PAGE_PATH)
+                                                                    ?
+                                                                    (
+                                                                      <MenuItem primaryText="My projects"
+                                                                                onClick={this.onClickAllProjects}
+                                                                                style={{backgroundColor: '#FF8F4F'}}/>
+                                                                    ) :
+                                                                    (
+                                                                      <MenuItem primaryText="My projects"
+                                                                                onClick={this.onClickAllProjects}/>
+                                                                    )
+                                                                )
+                                                                }
+
                                                                 {(this.props.location.pathname === VIEW_TASKS_PAGE_PATH)
                                                                     ?
                                                                     (
-                                                                        <MenuItem primaryText="All tasks"
+                                                                        <MenuItem primaryText="My tasks"
                                                                                   onClick={this.onClickAllTasks}
                                                                                   style={{backgroundColor: '#FF8F4F'}}/>
                                                                     ) :
                                                                     (
-                                                                        <MenuItem primaryText="All tasks"
+                                                                        <MenuItem primaryText="My tasks"
                                                                                   onClick={this.onClickAllTasks}/>
                                                                     )
                                                                 }
@@ -403,40 +441,40 @@ class NavigationBarLayout extends Component {
                                                                 {(this.props.location.pathname === VIEW_ALL_DRIVERS_PAGE_PATH)
                                                                     ?
                                                                     (
-                                                                        <MenuItem primaryText="View all drivers"
+                                                                        <MenuItem primaryText="View all employees"
                                                                                   onClick={this.onClickViewAllDrivers}
                                                                                   style={{backgroundColor: '#FF8F4F'}}/>
                                                                     ) :
                                                                     (
-                                                                        <MenuItem primaryText="View all drivers"
+                                                                        <MenuItem primaryText="View all employees"
                                                                                   onClick={this.onClickViewAllDrivers}/>
                                                                     )
                                                                 }
 
-                                                                {(this.props.location.pathname === CREATE_CAR_PAGE_PATH)
-                                                                    ?
-                                                                    (
-                                                                        <MenuItem primaryText="Create car"
-                                                                                  onClick={this.onClickCreateCar}
-                                                                                  style={{backgroundColor: '#FF8F4F'}}/>
-                                                                    ) :
-                                                                    (
-                                                                        <MenuItem primaryText="Create car"
-                                                                                  onClick={this.onClickCreateCar}/>
-                                                                    )
+                                                                {(this.props.location.pathname === CREATE_PROJECT_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="Create project"
+                                                                              onClick={this.onClickCreateProject}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="Create project"
+                                                                              onClick={this.onClickCreateProject}/>
+                                                                  )
                                                                 }
 
-                                                                {(this.props.location.pathname === VIEW_CARS_PAGE_PATH)
-                                                                    ?
-                                                                    (
-                                                                        <MenuItem primaryText="View cars"
-                                                                                  onClick={this.onClickViewCars}
-                                                                                  style={{backgroundColor: '#FF8F4F'}}/>
-                                                                    ) :
-                                                                    (
-                                                                        <MenuItem primaryText="View cars"
-                                                                                  onClick={this.onClickViewCars}/>
-                                                                    )
+                                                                {(this.props.location.pathname === VIEW_PROJECTS_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="View all projects"
+                                                                              onClick={this.onClickAllProjects}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="View all projects"
+                                                                              onClick={this.onClickAllProjects}/>
+                                                                  )
                                                                 }
 
                                                                 {(this.props.location.pathname === CREATE_TASK_PAGE_PATH)
@@ -455,12 +493,12 @@ class NavigationBarLayout extends Component {
                                                                 {(this.props.location.pathname === VIEW_TASKS_PAGE_PATH)
                                                                     ?
                                                                     (
-                                                                        <MenuItem primaryText="ViewTasks"
+                                                                        <MenuItem primaryText="View all tasks"
                                                                                   onClick={this.onClickAllTasks}
                                                                                   style={{backgroundColor: '#FF8F4F'}}/>
                                                                     ) :
                                                                     (
-                                                                        <MenuItem primaryText="ViewTasks"
+                                                                        <MenuItem primaryText="View all tasks"
                                                                                   onClick={this.onClickAllTasks}/>
                                                                     )
                                                                 }
@@ -468,12 +506,12 @@ class NavigationBarLayout extends Component {
                                                                 {(this.props.location.pathname === REPORTS_PAGE_PATH)
                                                                     ?
                                                                     (
-                                                                        <MenuItem primaryText="Reports"
+                                                                        <MenuItem primaryText="View all reports"
                                                                                   onClick={this.onClickViewAllReports}
                                                                                   style={{backgroundColor: '#FF8F4F'}}/>
                                                                     ) :
                                                                     (
-                                                                        <MenuItem primaryText="Reports"
+                                                                        <MenuItem primaryText="View all reports"
                                                                                   onClick={this.onClickViewAllReports}/>
                                                                     )
                                                                 }

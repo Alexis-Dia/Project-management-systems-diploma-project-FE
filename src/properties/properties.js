@@ -10,12 +10,14 @@ export const HOSTNAME = 'localhost'
 export const PORT = 8080
 
 export const PATH_METHOD_AUTH_AUTHENTICATE = '/auth/authenticate';
-export const PATH_METHOD_GET_ALL_DRIVERS = '/user/allDrivers';
+export const PATH_METHOD_GET_ALL_EMPLOYEES = '/user/allEmployees';
 export const PATH_METHOD_SIGN_UP = '/user/signUp';
+
 export const PATH_METHOD_GET_ALL_CARS = '/car/all';
 export const PATH_METHOD_GET_ALL_FREE_CARS = '/car/allFree';
 export const PATH_METHOD_POST_CREATE_NEW_CAR = '/car/addNew';
 export const PATH_METHOD_GET_ALL_BRANDS = '/brand/all';
+
 export const PATH_METHOD_GET_ALL_TASKS = '/task/all';
 export const PATH_METHOD_GET_MINE_TASKS = '/task/allMine';
 export const PATH_METHOD_GET_FREE_TASKS = '/task/byStatus?taskStatus=FREE';
@@ -23,6 +25,15 @@ export const PATH_METHOD_POST_CREATE_TASK = '/task/createNew';
 export const PATH_METHOD_TAKE_TASK = '/task/takeTask';
 export const PATH_METHOD_CHANGE_TASK_STATUS_TO_VALIDATED = '/task/changeTaskStatusToValidated';
 export const PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED = '/task/changeTaskStatusToFinish';
+
+export const PATH_METHOD_GET_ALL_PROJECTS = '/project/load';
+export const PATH_METHOD_GET_MINE_PROJECTS = '/project/allMine';
+export const PATH_METHOD_GET_FREE_PROJECTS = '/project/byStatus?taskStatus=FREE';
+export const PATH_METHOD_POST_CREATE_PROJECT = '/project/createNew';
+export const PATH_METHOD_TAKE_PROJECT = '/project/takeProject';
+export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_VALIDATED = '/task/changeProjectStatusToValidated';
+export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_FINISHED = '/task/changeProjectStatusToFinish';
+
 export const PATH_METHOD_GET_ALL_REPORTS = '/report/all';
 export const PATH_METHOD_GET_REPORTS_BY_TASK_ID = '/report/getByTaskId?taskId=';
 export const PATH_METHOD_POST_CREATE_REPORT = '/report/createReport/';
@@ -81,6 +92,11 @@ export const REGISTARATION_PAGE_PATH = '/signUp';
 export const VIEW_ALL_DRIVERS_PAGE_PATH = '/viewDrivers';
 export const VIEW_CARS_PAGE_PATH = '/viewCars';
 export const CREATE_CAR_PAGE_PATH = '/createCar';
+
+export const VIEW_PROJECTS_PAGE_PATH = '/viewProjects';
+export const CREATE_PROJECT_PAGE_PATH = '/createProject';
+
+export const VIEW_FREE_PROJECTS_PAGE_PATH = '/viewFreeProjects';
 export const VIEW_TASKS_PAGE_PATH = '/viewTasks';
 export const VIEW_FREE_TASKS_PAGE_PATH = '/viewFreeTasks';
 export const CREATE_TASK_PAGE_PATH = '/createTask';
@@ -92,6 +108,8 @@ export const VIEW_ALL_DRIVERS = 'ViewAllDrivers';
 export const REPORTS = 'Reports';
 export const CREATE_CAR = 'CreateCar';
 export const VIEW_CARS = 'ViewCars';
+export const VIEW_PROJECTS = 'ViewProjects';
+export const VIEW_FREE_PROJECTS = 'ViewFreeProjects';
 export const VIEW_TASKS = 'ViewTasks';
 export const VIEW_FREE_TASKS = 'ViewFreeTasks';
 export const CREATE_TASK = 'CreateTask';

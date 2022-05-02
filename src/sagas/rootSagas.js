@@ -13,6 +13,15 @@ import {
   updateTaskToValidateStatusSaga,
   updateTaskToFinishStatusSaga
 } from '../api/task/taskSagas';
+import {
+  projectsFetch,
+  mineProjectsFetch,
+  freeProjectsFetch,
+  createNewProjectSaga,
+  updateProjectSaga,
+  updateProjectToValidateStatusSaga,
+  updateProjectToFinishStatusSaga
+} from '../api/project/projectSagas';
 
 // Your sagas for this container
 export default function * rootSaga () {
@@ -24,9 +33,13 @@ export default function * rootSaga () {
     fork(newCarCreate),
     fork(freeCarsFetch),
     fork(brandsFetch),
-    fork(reportsFetch),
-    fork(reportsByIdFetch),
-    fork(createNewReportFetch),
+    fork(projectsFetch),
+    fork(updateProjectSaga),
+    fork(updateProjectToValidateStatusSaga),
+    fork(updateProjectToFinishStatusSaga),
+    fork(mineProjectsFetch),
+    fork(createNewProjectSaga),
+    fork(freeProjectsFetch),
     fork(tasksFetch),
     fork(updateTaskSaga),
     fork(updateTaskToValidateStatusSaga),
@@ -34,5 +47,8 @@ export default function * rootSaga () {
     fork(mineTasksFetch),
     fork(createNewTaskSaga),
     fork(freeTasksFetch),
+    fork(reportsFetch),
+    fork(reportsByIdFetch),
+    fork(createNewReportFetch),
   ]
 }

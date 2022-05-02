@@ -1,4 +1,4 @@
-import { fetchAuth, fetchDrivers, createNewUser } from './loginApi';
+import { fetchAuth, fetchEmployees, createNewUser } from './loginApi';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import {delay} from "redux-saga";
 import {
@@ -41,7 +41,7 @@ export function * loginAuthFetch () {
 
 
 export function fetchDriversApi (data) {
-    return fetchDrivers(data)
+    return fetchEmployees(data)
         .then(data => {
             return { response: data }
         })

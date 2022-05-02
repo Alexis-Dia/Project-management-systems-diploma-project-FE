@@ -3,6 +3,7 @@ import locationReducer from './location';
 import loginReducer from '../api/login/loginReducer';
 import carReducer from '../api/car/carReducer';
 import brandReducer from '../api/brand/brandReducer';
+import projectReducer from '../api/project/projectReducer';
 import taskReducer from '../api/task/taskReducer';
 import reportReducer from '../api/report/reportReducer';
 import flashReducer from "../api/flash/flashReducer";
@@ -14,6 +15,7 @@ export const makeRootReducer = (asyncReducers) => {
     auth: loginReducer,
     car: carReducer,
     brand: brandReducer,
+    project: projectReducer,
     task: taskReducer,
     report: reportReducer,
     flashMessages: flashReducer,

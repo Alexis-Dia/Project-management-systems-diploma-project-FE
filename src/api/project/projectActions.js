@@ -1,0 +1,16 @@
+export const CREATE_PROJECT = 'CREATE_PROJECT';
+export const PROJECT_WAS_SUCCESSFULLY_CREATED = 'Project was successfully created!';
+export const PROJECT_WAS_SUCCESSFULLY_ASSIGNED = 'Project was successfully assigned to you!';
+export const PROJECT_WAS_SUCCESSFULLY_MOVED_TO_VALIDATING_STATUS = 'Project was successfully moved to validation-status for validating by admin!';
+export const PROJECT_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN = 'Project was successfully validated by admin!';
+export const GET_PROJECTS = 'GET_PROJECT';
+export const TAKE_PROJECT = 'TAKE_PROJECT';
+export const VALIDATE_PROJECT = 'VALIDATE_PROJECT';
+export const FINISH_PROJECT = 'FINISH_PROJECT';
+export const GET_MINE_PROJECT = 'GET_MINE_PROJECT';
+export const GET_FREE_PROJECT = 'GET_FREE_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const SUCCESS = '_SUCCESS';
+export const FAILURE = '_FAILURE';
+export const UNAUTHORIZED = '_UNAUTHORIZED';
+export const CHANGE_USER_TO_BUSY = 'CHANGE_USER_TO_BUSY';

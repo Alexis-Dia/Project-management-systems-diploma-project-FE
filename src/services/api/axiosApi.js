@@ -69,7 +69,6 @@ export function apiCall (hostname, port, method, body) {
 }
 
 export function apiCallForBasicAuth (hostname, port, pathMethod, method, body = {data: {}}, credentials = {emailAddress: null, password: null}) {
-
     if (project.env !== 'development') {
         hostname = window.location.hostname
     }
@@ -92,6 +91,7 @@ export function apiCallForBasicAuth (hostname, port, pathMethod, method, body = 
     if (body) {
         options.data = body.data
     }
+
     return axios(options)
         .then(response => {
             return { 'httpStatus': PAGE_STATUS_200, 'result': response.data }
