@@ -1,0 +1,21 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+    "arrow-parens": { "options": "ban-single-arg-parens" },
+    "jsx-boolean-value": false,
+    "interface-name": false,
+    "ordered-imports": false,
+    "max-line-length": {
+      "options": [10],
+      "severity": "error"
+    },
+    "member-access": false,
+    "no-console": false,
+    "no-empty-interface": false,
+    "no-submodule-imports": false,
+    "quotemark": {
+      "options": ["avoid-template", "jsx-double", "single"],
+      "severity": "error"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+export const DELETE_CURRENT_USER = 'DELETE_CURRENT_USER';
+export const SUCCESS = '_SUCCESS';
+export const FAILURE = '_FAILURE';
+export const UNAUTHORIZED = '_UNAUTHORIZED';
+export const LOGIN = 'LOGIN';
+export const GET_DRIVERS = 'GET_DRIVERS';
+export const USER_WAS_SUCCESSFULLY_CREATED = 'You successfully signed up!';
+export const USER_EXISTS_WITH_THE_SAME_EMAIL = 'User exists with the same email!';
+export const SIGN_UP = 'SIGN_UP';
