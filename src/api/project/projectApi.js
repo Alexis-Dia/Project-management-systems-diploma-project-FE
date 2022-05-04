@@ -22,7 +22,7 @@ export function fetchFreeProjects(ob) {
 
 export function createProject(ob) {
   let body = ob.data;
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_POST_CREATE_PROJECT, POST, body, ob.data.credentials)
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_POST_CREATE_PROJECT, PUT, body, ob.data.credentials)
 }
 
 export function updateProjectApi(ob) {

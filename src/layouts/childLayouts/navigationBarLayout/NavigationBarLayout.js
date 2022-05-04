@@ -21,7 +21,11 @@ import {
     VIEW_FREE_TASKS_PAGE_PATH,
     VIEW_FREE_TASKS,
     VIEW_PROJECTS_PAGE_PATH,
-    VIEW_FREE_PROJECTS_PAGE_PATH, VIEW_PROJECTS, VIEW_FREE_PROJECTS, CREATE_PROJECT_PAGE_PATH
+    VIEW_FREE_PROJECTS_PAGE_PATH,
+    VIEW_PROJECTS,
+    VIEW_FREE_PROJECTS,
+    CREATE_PROJECT_PAGE_PATH,
+    VIEW_MY_PROJECTS_PAGE_PATH, VIEW_MY_PROJECTS
 } from '../../../properties/properties'
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -103,6 +107,15 @@ class NavigationBarLayout extends Component {
         this.toggleDrawer();
         this.setState({
             currentPage: VIEW_PROJECTS,
+        });
+    };
+
+    onClickMylProjects = () => {
+        const path = VIEW_MY_PROJECTS_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: VIEW_MY_PROJECTS,
         });
     };
 
@@ -345,6 +358,19 @@ class NavigationBarLayout extends Component {
                                                                   (
                                                                     <MenuItem primaryText="All projects"
                                                                               onClick={this.onClickAllProjects}/>
+                                                                  )
+                                                                }
+
+                                                                {(this.props.location.pathname === VIEW_MY_PROJECTS_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="My projects"
+                                                                              onClick={this.onClickMylProjects}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="My projects"
+                                                                              onClick={this.onClickMylProjects}/>
                                                                   )
                                                                 }
 

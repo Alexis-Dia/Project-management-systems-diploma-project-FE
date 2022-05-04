@@ -126,6 +126,9 @@ class ProjectsView extends Component {
                           <TableCell>Name</TableCell>
                           <TableCell>Comment</TableCell>
                           <TableCell>Creation date</TableCell>
+                          <TableCell>Hours</TableCell>
+                          <TableCell>Priority</TableCell>
+                          <TableCell>Budget</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -138,6 +141,9 @@ class ProjectsView extends Component {
                                 <TableCell>{project.name}</TableCell>
                                 <TableCell>{project.comment}</TableCell>
                                 <TableCell>{project.createDate}</TableCell>
+                                <TableCell>{project.hours}</TableCell>
+                                <TableCell>{project.priority}</TableCell>
+                                <TableCell>{project.budget}</TableCell>
                               </TableRow>
                           );
                         })}

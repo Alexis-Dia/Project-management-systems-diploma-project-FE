@@ -28,9 +28,10 @@ class CreateProjectView extends Component {
     super(props);
     this.state = {
       name: null,
-      distance: null,
-      weight: null,
-      reward: null,
+      comment: null,
+      hours: null,
+      priority: null,
+      budget: null,
     }
   }
 
@@ -64,16 +65,20 @@ class CreateProjectView extends Component {
     this.setState({name: e.target.value});
   };
 
-  onChangeDistance  = (e) => {
-    this.setState({distance: e.target.value});
+  onChangeHours  = (e) => {
+    this.setState({hours: e.target.value});
   };
 
-  onChangeWeight  = (e) => {
-    this.setState({weight: e.target.value});
+  onChangePriority  = (e) => {
+    this.setState({priority: e.target.value});
   };
 
-  onChangeReward  = (e) => {
-    this.setState({reward: e.target.value});
+  onChangeBudget  = (e) => {
+    this.setState({budget: e.target.value});
+  };
+
+  onChangeComment  = (e) => {
+    this.setState({comment: e.target.value});
   };
 
   saveProject = () => {
@@ -81,9 +86,10 @@ class CreateProjectView extends Component {
     this.props.createProject({
       data: {
         name: this.state.name,
-        summaryDistance: this.state.distance,
-        weight: this.state.weight,
-        reward: this.state.reward,
+        comment: this.state.comment,
+        hours: this.state.hours,
+        priority: this.state.priority,
+        budget: this.state.budget,
       },
       credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
     });
@@ -112,13 +118,13 @@ class CreateProjectView extends Component {
                               underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
                               style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
                               onChange={this.onChangeName}
-                              name='weight'
+                              name='priority'
                           />
                         </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Summary distance</div>
+                        <div className={classes.paper}>Number of hours</div>
                       </Grid>
                       <Grid item xs={12} sm={9}>
                         <div className={classes.paper} style={{borderColor: '#43434'}}>
@@ -126,14 +132,14 @@ class CreateProjectView extends Component {
                               type="number"
                               underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
                               style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeDistance}
-                              name='weight'
+                              onChange={this.onChangeHours}
+                              name='hours'
                           />
                         </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Weight</div>
+                        <div className={classes.paper}>Priority</div>
                       </Grid>
                       <Grid item xs={12} sm={9}>
                         <div className={classes.paper} style={{borderColor: '#43434'}}>
@@ -141,14 +147,14 @@ class CreateProjectView extends Component {
                               type="number"
                               underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
                               style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeWeight}
-                              name='weight'
+                              onChange={this.onChangePriority}
+                              name='priority'
                           />
                         </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Reward</div>
+                        <div className={classes.paper}>Budget</div>
                       </Grid>
                       <Grid item xs={12} sm={9}>
                         <div className={classes.paper} style={{borderColor: '#43434'}}>
@@ -156,15 +162,30 @@ class CreateProjectView extends Component {
                               type="number"
                               underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
                               style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeReward}
+                              onChange={this.onChangeBudget}
                               name='weight'
+                          />
+                        </div>
+                      </Grid>
+
+                      <Grid item xs={12} sm={3}>
+                        <div className={classes.paper}>Comment</div>
+                      </Grid>
+                      <Grid item xs={12} sm={9}>
+                        <div className={classes.paper} style={{borderColor: '#43434'}}>
+                          <TextField
+                            type="string"
+                            underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
+                            style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
+                            onChange={this.onChangeComment}
+                            name='comment'
                           />
                         </div>
                       </Grid>
 
                     </Grid>
                     <div style={{marginLeft: '175px', marginTop: '30px'}}>
-                      {this.state.name && this.state.distance && this.state.weight && this.state.reward &&
+                      {this.state.name && this.state.hours && this.state.priority && this.state.budget &&
                       <Button variant="contained" color="primary" onClick={this.saveProject}>
                         Add project
                       </Button>

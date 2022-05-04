@@ -29,7 +29,7 @@ export const PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED = '/task/changeTaskStatu
 export const PATH_METHOD_GET_ALL_PROJECTS = '/project/load';
 export const PATH_METHOD_GET_MINE_PROJECTS = '/project/allMine';
 export const PATH_METHOD_GET_FREE_PROJECTS = '/project/byStatus?taskStatus=FREE';
-export const PATH_METHOD_POST_CREATE_PROJECT = '/project/createNew';
+export const PATH_METHOD_POST_CREATE_PROJECT = '/project/create';
 export const PATH_METHOD_TAKE_PROJECT = '/project/takeProject';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_VALIDATED = '/task/changeProjectStatusToValidated';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_FINISHED = '/task/changeProjectStatusToFinish';
@@ -94,6 +94,7 @@ export const VIEW_CARS_PAGE_PATH = '/viewCars';
 export const CREATE_CAR_PAGE_PATH = '/createCar';
 
 export const VIEW_PROJECTS_PAGE_PATH = '/viewProjects';
+export const VIEW_MY_PROJECTS_PAGE_PATH = '/viewMyProjects';
 export const CREATE_PROJECT_PAGE_PATH = '/createProject';
 
 export const VIEW_FREE_PROJECTS_PAGE_PATH = '/viewFreeProjects';
@@ -109,6 +110,7 @@ export const REPORTS = 'Reports';
 export const CREATE_CAR = 'CreateCar';
 export const VIEW_CARS = 'ViewCars';
 export const VIEW_PROJECTS = 'ViewProjects';
+export const VIEW_MY_PROJECTS = 'ViewMyProjects';
 export const VIEW_FREE_PROJECTS = 'ViewFreeProjects';
 export const VIEW_TASKS = 'ViewTasks';
 export const VIEW_FREE_TASKS = 'ViewFreeTasks';
