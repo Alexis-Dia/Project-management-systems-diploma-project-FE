@@ -13,7 +13,7 @@ export function fetchTasks (ob) {
 }
 
 export function fetchMineTasks(ob) {
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_MINE_TASKS, GET, ob.data.data, ob.data.credentials)
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_MINE_TASKS + '?userId=' + ob.data.data.id, GET, ob.data.data, ob.data.credentials)
 }
 
 export function fetchFreeTasks(ob) {

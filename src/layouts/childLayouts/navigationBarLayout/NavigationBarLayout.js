@@ -111,7 +111,7 @@ class NavigationBarLayout extends Component {
     };
 
     onClickMylProjects = () => {
-        const path = VIEW_MY_PROJECTS_PAGE_PATH;
+        const path = VIEW_PROJECTS_PAGE_PATH;
         browserHistory.push(path);
         this.toggleDrawer();
         this.setState({
@@ -336,32 +336,19 @@ class NavigationBarLayout extends Component {
                                                             <Menu style={{backgroundColor: '#FFFBF7', width: '100%'}}>
 
                                                                 {(this.props.location.pathname === EMPTY_PAGE_PATH)
-                                                                    ?
-                                                                    (
-                                                                        <MenuItem primaryText="My information"
-                                                                                  onClick={this.onClickMyInformation}
-                                                                                  style={{backgroundColor: '#FF8F4F'}}/>
-                                                                    ) :
-                                                                    (
-                                                                        <MenuItem primaryText="My information"
-                                                                                  onClick={this.onClickMyInformation}/>
-                                                                    )
-                                                                }
-
-                                                                {(this.props.location.pathname === VIEW_PROJECTS_PAGE_PATH)
                                                                   ?
                                                                   (
-                                                                    <MenuItem primaryText="All projects"
-                                                                              onClick={this.onClickAllProjects}
+                                                                    <MenuItem primaryText="My information"
+                                                                              onClick={this.onClickMyInformation}
                                                                               style={{backgroundColor: '#FF8F4F'}}/>
                                                                   ) :
                                                                   (
-                                                                    <MenuItem primaryText="All projects"
-                                                                              onClick={this.onClickAllProjects}/>
+                                                                    <MenuItem primaryText="My information"
+                                                                              onClick={this.onClickMyInformation}/>
                                                                   )
                                                                 }
 
-                                                                {(this.props.location.pathname === VIEW_MY_PROJECTS_PAGE_PATH)
+                                                                {(this.props.location.pathname === VIEW_PROJECTS_PAGE_PATH)
                                                                   ?
                                                                   (
                                                                     <MenuItem primaryText="My projects"
@@ -374,20 +361,20 @@ class NavigationBarLayout extends Component {
                                                                   )
                                                                 }
 
-                                                                {userStatus === 'FREE' && (
-                                                                  (this.props.location.pathname === VIEW_FREE_PROJECTS_PAGE_PATH)
-                                                                    ?
-                                                                    (
-                                                                      <MenuItem primaryText="My projects"
-                                                                                onClick={this.onClickAllProjects}
-                                                                                style={{backgroundColor: '#FF8F4F'}}/>
-                                                                    ) :
-                                                                    (
-                                                                      <MenuItem primaryText="My projects"
-                                                                                onClick={this.onClickAllProjects}/>
-                                                                    )
-                                                                )
-                                                                }
+                                                                {/*{userStatus === 'FREE' && (*/}
+                                                                {/*  (this.props.location.pathname === VIEW_FREE_PROJECTS_PAGE_PATH)*/}
+                                                                {/*    ?*/}
+                                                                {/*    (*/}
+                                                                {/*      <MenuItem primaryText="My projects"*/}
+                                                                {/*                onClick={this.onClickAllProjects}*/}
+                                                                {/*                style={{backgroundColor: '#FF8F4F'}}/>*/}
+                                                                {/*    ) :*/}
+                                                                {/*    (*/}
+                                                                {/*      <MenuItem primaryText="My projects"*/}
+                                                                {/*                onClick={this.onClickAllProjects}/>*/}
+                                                                {/*    )*/}
+                                                                {/*)*/}
+                                                                {/*}*/}
 
                                                                 {(this.props.location.pathname === VIEW_TASKS_PAGE_PATH)
                                                                     ?
@@ -431,7 +418,7 @@ class NavigationBarLayout extends Component {
                                                                     )
                                                                 }*/}
 
-                                                                {userStatus === 'BUSY' && (
+                                                                {
                                                                 (this.props.location.pathname === ADD_REPORT_PAGE_PATH)
                                                                     ?
                                                                     (
@@ -443,7 +430,7 @@ class NavigationBarLayout extends Component {
                                                                         <MenuItem primaryText="Add report"
                                                                                   onClick={this.onClickAddReport}/>
                                                                     )
-                                                                    )
+
                                                                 }
 
                                                             </Menu>

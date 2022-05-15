@@ -19,7 +19,7 @@ export const PATH_METHOD_POST_CREATE_NEW_CAR = '/car/addNew';
 export const PATH_METHOD_GET_ALL_BRANDS = '/brand/all';
 
 export const PATH_METHOD_GET_ALL_TASKS = '/task/all';
-export const PATH_METHOD_GET_MINE_TASKS = '/task/allMine';
+export const PATH_METHOD_GET_MINE_TASKS = '/task/loadAllMine';
 export const PATH_METHOD_GET_FREE_TASKS = '/task/byStatus?taskStatus=FREE';
 export const PATH_METHOD_POST_CREATE_TASK = '/task/createNew';
 export const PATH_METHOD_TAKE_TASK = '/task/takeTask';
@@ -27,7 +27,7 @@ export const PATH_METHOD_CHANGE_TASK_STATUS_TO_VALIDATED = '/task/changeTaskStat
 export const PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED = '/task/changeTaskStatusToFinish';
 
 export const PATH_METHOD_GET_ALL_PROJECTS = '/project/load';
-export const PATH_METHOD_GET_MINE_PROJECTS = '/project/allMine';
+export const PATH_METHOD_GET_MINE_PROJECTS = '/project/loadAllMine';
 export const PATH_METHOD_GET_FREE_PROJECTS = '/project/byStatus?taskStatus=FREE';
 export const PATH_METHOD_POST_CREATE_PROJECT = '/project/create';
 export const PATH_METHOD_TAKE_PROJECT = '/project/takeProject';

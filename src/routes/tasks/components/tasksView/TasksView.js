@@ -59,7 +59,7 @@ class TasksView extends Component {
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
       this.props.getMineTasks({
-        data: {},
+        data: {id: this.props.auth.user.id},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
     } else if(this.props.auth.user.userRole === 'ADMIN') {
@@ -75,12 +75,12 @@ class TasksView extends Component {
       if (nextprops.auth.isAuthenticated) {
         if (nextprops.auth.user.userRole === 'USER') {
           this.props.getMineTasks({
-            data: {},
+            data: {id: nextprops.auth.user.id},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         } else if(nextprops.auth.user.userRole === 'ADMIN') {
           this.props.getTasks({
-            data: {},
+            data: {id: nextprops.auth.user.id},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         }
@@ -135,14 +135,10 @@ class TasksView extends Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Id</TableCell>
-                          <TableCell numeric>Summary distance</TableCell>
-                          <TableCell numeric>Weight</TableCell>
-                          <TableCell numeric>Driver</TableCell>
-                          <TableCell numeric>Car</TableCell>
                           <TableCell numeric>Task status</TableCell>
                           <TableCell numeric>Name</TableCell>
                           <TableCell numeric>Number of reports</TableCell>
-                          <TableCell numeric>Reward</TableCell>
+                          <TableCell numeric>Comment</TableCell>
                           <TableCell numeric></TableCell>
                         </TableRow>
                       </TableHead>
@@ -153,11 +149,7 @@ class TasksView extends Component {
                                 <TableCell component="th" scope="row">
                                   {task.id}
                                 </TableCell>
-                                <TableCell numeric>{task.summaryDistance}</TableCell>
-                                <TableCell numeric>{task.weight}</TableCell>
-                                {task.taskStatus !== 'FREE' ? (<TableCell numeric>{task.driver.lastName + ' ' + task.driver.firstName + ', ID is ' + task.driver.userID}</TableCell>) : (<TableCell numeric></TableCell>)}
-                                <TableCell numeric>{task.car && task.car.number}</TableCell>
-                                <TableCell numeric>{task.taskStatus}</TableCell>
+                                <TableCell numeric>{task.status}</TableCell>
                                 <TableCell numeric>{task.name}</TableCell>
                                {/* {task.taskStatus !== 'FREE' ? (<TableCell numeric onClick={() => this.goToReportsByTaskId(task.id)}>{task.reports.length}</TableCell>) : (<TableCell numeric></TableCell>)}*/}
                                 {task.taskStatus !== 'FREE' ? (<TableCell numeric>
@@ -165,7 +157,7 @@ class TasksView extends Component {
                                     {task.reports.length}
                                   </Link>
                                 </TableCell>) : (<TableCell numeric></TableCell>)}
-                                <TableCell numeric>{task.reward}</TableCell>
+                                <TableCell>{task.comment}</TableCell>
                                 <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.taskStatus === 'IN_PROGRESS' && task.reports.length > 0) ?
                                     (
                                         <div>

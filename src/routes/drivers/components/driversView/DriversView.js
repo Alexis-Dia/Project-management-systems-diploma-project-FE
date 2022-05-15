@@ -90,7 +90,7 @@ class DriversView extends Component {
                                 <TableCell component="th" scope="row">
                                   {driver.userID}
                                 </TableCell>
-                                <TableCell numeric>{driver.lastName + ' ' + driver.firstName + ' ' + driver.patronomic}</TableCell>
+                                <TableCell numeric>{driver.lastName + ' ' + driver.firstName}</TableCell>
                                 <TableCell numeric>{driver.birthday}</TableCell>
                                 <TableCell numeric>{driver.emailAddress}</TableCell>
                                 <TableCell numeric>{driver.money}</TableCell>

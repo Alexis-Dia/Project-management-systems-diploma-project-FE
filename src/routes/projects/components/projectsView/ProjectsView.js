@@ -57,7 +57,12 @@ class ProjectsView extends Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.user.userRole === 'USER' || this.props.auth.user.userRole === 'ADMIN') {
+    if (this.props.auth.user.userRole === 'USER') {
+      this.props.getMineProjects({
+        data: {id: this.props.auth.user.id},
+        credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+      });
+    } else if(this.props.auth.user.userRole === 'ADMIN') {
       this.props.getProjects({
         data: {page: "0", size: "10"},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
@@ -68,10 +73,17 @@ class ProjectsView extends Component {
   componentWillReceiveProps(nextprops) {
     if (nextprops.auth !== this.props.auth) {
       if (nextprops.auth.isAuthenticated) {
-        this.props.getProjects({
-          data: {page: "0", size: "10"},
-          credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
-        });
+        if (nextprops.auth.user.userRole === 'USER') {
+          this.props.getMineProjects({
+            data: {id: nextprops.auth.user.id},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+        } else if(nextprops.auth.user.userRole === 'ADMIN') {
+          this.props.getProjects({
+            data: {page: "0", size: "10"},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+        }
       }
       this.setState({auth: nextprops.auth});
     }

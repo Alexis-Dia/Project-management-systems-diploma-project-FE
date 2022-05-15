@@ -13,7 +13,7 @@ export function fetchProjects (ob) {
 }
 
 export function fetchMineProjects(ob) {
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_MINE_PROJECTS, GET, ob.data.data, ob.data.credentials)
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_MINE_PROJECTS + '?userId=' + ob.data.data.id, GET, ob.data.data, ob.data.credentials)
 }
 
 export function fetchFreeProjects(ob) {
