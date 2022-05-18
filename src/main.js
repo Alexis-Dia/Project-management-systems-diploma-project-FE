@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
+import axios from "axios";
+import setAuthorizationToken from "./utils/setAuthorizationToken";
 
 // Store Initialization
 // ------------------------------------
@@ -12,8 +14,11 @@ const store = createStore(window.__INITIAL_STATE__);
 const MOUNT_NODE = document.getElementById('root');
 
 let render = () => {
+
   const App = require('./components/App').default;
   const routes = require('./routes/index').default(store);
+  const token = localStorage.jwtToken;
+  setAuthorizationToken("mmmmmmmmmmmmmmmmmmmmmmmmmmmm");
 
   ReactDOM.render(
     <App store={store} routes={routes} />,

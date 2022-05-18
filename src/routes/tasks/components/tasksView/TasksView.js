@@ -59,7 +59,7 @@ class TasksView extends Component {
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
       this.props.getMineTasks({
-        data: {id: this.props.auth.user.id},
+        data: {id: this.props.auth.user.userID},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
     } else if(this.props.auth.user.userRole === 'ADMIN') {
@@ -75,12 +75,12 @@ class TasksView extends Component {
       if (nextprops.auth.isAuthenticated) {
         if (nextprops.auth.user.userRole === 'USER') {
           this.props.getMineTasks({
-            data: {id: nextprops.auth.user.id},
+            data: {id: nextprops.auth.user.userID},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         } else if(nextprops.auth.user.userRole === 'ADMIN') {
           this.props.getTasks({
-            data: {id: nextprops.auth.user.id},
+            data: {id: nextprops.auth.user.userID},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         }

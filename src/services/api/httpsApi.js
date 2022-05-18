@@ -1,5 +1,4 @@
 import https from 'https'
-//import setAuthorizationToken from '../../utils/setAuthorizationToken';
 import { PAGE_STATUS_200, PAGE_STATUS_500, APPLICATION_JSON, BEARER, ENCODING_UTF8 } from '../../properties/properties'
 const project = require('../../../project.config')
 

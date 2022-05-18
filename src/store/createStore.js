@@ -6,6 +6,7 @@ import { updateLocation } from './location'
 import createSagaMiddleware from 'redux-saga'
 import mySaga from '../sagas/rootSagas'
 import { LOGIN } from '../api/login/loginActions'
+import setAuthorizationToken from "../utils/setAuthorizationToken";
 
 const createStore = (initialState = {}) => {
   // ======================================================
@@ -56,8 +57,14 @@ const createStore = (initialState = {}) => {
     })
   }
 
-  //setAuthorizationToken(localStorage.jwtToken);
-  //store.dispatch(setCurrentUser(jwt.decode('dfgdfgdfgdfgdfgdfgdfg')));
+  if (localStorage.jwtToken) {
+    const token = localStorage.jwtToken;
+    setAuthorizationToken(token);
+    console.log('jwtToken in the controller 1 : ', localStorage.jwtToken)
+    store.dispatch({ type: 'SET_CURRENT_USER_FROM_TOKEN', token });
+  }
+  console.log('jwtToken in the controller 2 : ', localStorage.jwtToken)
+  setAuthorizationToken(localStorage.jwtToken);
 
   return store
 };

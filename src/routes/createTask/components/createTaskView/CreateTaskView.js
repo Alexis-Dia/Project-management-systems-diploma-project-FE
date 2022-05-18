@@ -19,6 +19,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import {DateTimePicker} from "material-ui-pickers";
 import moment from "moment";
+import {ALICEBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -128,7 +129,8 @@ class CreateTaskView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px', marginLeft: '200px'}}>
+      <div style={{height: '650px'}}>
+      <div style={{height: '500px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated && auth.user.userRole === 'ADMIN' ?
               (
@@ -228,6 +230,7 @@ class CreateTaskView extends Component {
           }
 
         </MuiThemeProvider>
+      </div>
       </div>
     )
   }

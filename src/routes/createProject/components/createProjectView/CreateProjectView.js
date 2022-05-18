@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {CREATE_PROJECT, PROJECT_WAS_SUCCESSFULLY_CREATED} from "../../../../api/project/projectActions";
 import {browserHistory} from "react-router";
+import {ALICEBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -98,7 +99,8 @@ class CreateProjectView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px', marginLeft: '200px'}}>
+      <div style={{height: '650px'}}>
+        <div style={{height: '600px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated && auth.user.userRole === 'ADMIN' ?
               (
@@ -199,6 +201,7 @@ class CreateProjectView extends Component {
           }
 
         </MuiThemeProvider>
+      </div>
       </div>
     )
   }

@@ -17,6 +17,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from "react-router/es/Link";
 import Button from "@material-ui/core/Button";
+import setAuthorizationToken from "../../../../utils/setAuthorizationToken";
 
 const styles = theme => ({
   root: {
@@ -58,8 +59,8 @@ class ProjectsView extends Component {
 
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
-      this.props.getMineProjects({
-        data: {id: this.props.auth.user.id},
+      this.props.getProjects({
+        data: {page: "0", size: "10"},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
     } else if(this.props.auth.user.userRole === 'ADMIN') {
@@ -75,7 +76,7 @@ class ProjectsView extends Component {
       if (nextprops.auth.isAuthenticated) {
         if (nextprops.auth.user.userRole === 'USER') {
           this.props.getMineProjects({
-            data: {id: nextprops.auth.user.id},
+            data: {id: nextprops.auth.user.userID},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         } else if(nextprops.auth.user.userRole === 'ADMIN') {

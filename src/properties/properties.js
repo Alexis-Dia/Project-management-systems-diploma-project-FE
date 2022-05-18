@@ -30,7 +30,7 @@ export const PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED = '/task/changeTaskStatu
 export const PATH_METHOD_GET_ALL_PROJECTS = '/project/load';
 export const PATH_METHOD_GET_MINE_PROJECTS = '/project/loadAllMine';
 export const PATH_METHOD_GET_FREE_PROJECTS = '/project/byStatus?taskStatus=FREE';
-export const PATH_METHOD_POST_CREATE_PROJECT = '/project/create';
+export const PATH_METHOD_POST_CREATE_PROJECT = '/project/createProject';
 export const PATH_METHOD_TAKE_PROJECT = '/project/takeProject';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_VALIDATED = '/task/changeProjectStatusToValidated';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_FINISHED = '/task/changeProjectStatusToFinish';

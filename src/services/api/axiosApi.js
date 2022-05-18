@@ -11,6 +11,7 @@ import {
     HTTPS,
     HTTP, PATH_METHOD_AUTH_AUTHENTICATE
 } from '../../properties/properties'
+import setAuthorizationToken from "../../utils/setAuthorizationToken";
 
 export function apiSignUp (hostname, port, pathMethod, method, body = {data: {}}) {
 
@@ -79,19 +80,15 @@ export function apiCallForBasicAuth (hostname, port, pathMethod, method, body = 
         method: method,
         url: url,
         headers: {
-            'Authorization': BEARER + localStorage.jwtToken,
-        },
-        auth: {
-            username: credentials.emailAddress,
-            password: credentials.password
+            'Content-Type': 'application/json',
         },
         responseType: JSON
-    };
-
+    }
     if (body) {
         options.data = body.data
     }
-
+    const token = localStorage.jwtToken;
+    setAuthorizationToken(token);
     return axios(options)
         .then(response => {
             return { 'httpStatus': PAGE_STATUS_200, 'result': response.data }

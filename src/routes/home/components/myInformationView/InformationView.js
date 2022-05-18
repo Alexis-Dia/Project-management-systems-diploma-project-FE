@@ -66,7 +66,7 @@ class InformationView extends Component {
                       <Paper className={classes.paper}>ID</Paper>
                     </Grid>
                     <Grid item xs={12} sm={9}>
-                      <Paper className={classes.paper}>{auth.user.id}</Paper>
+                      <Paper className={classes.paper}>{auth.user.userID}</Paper>
                     </Grid>
 
                     <Grid item xs={12} sm={3}>

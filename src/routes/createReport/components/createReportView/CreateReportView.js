@@ -18,6 +18,7 @@ import moment from "moment";
 import {SAVE_REPORT} from "../../../../api/report/reportActions";
 import {REPORT_WAS_SUCCESSFULLY_ADDED} from "../../../../api/flash/flashActions";
 import {browserHistory} from "react-router";
+import {ALICEBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -65,7 +66,7 @@ class CreateReportView extends Component {
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
       this.props.getMineTasks({
-        data: {id: this.props.auth.user.id},
+        data: {id: this.props.auth.user.userID},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
     }
@@ -132,7 +133,8 @@ class CreateReportView extends Component {
 
 
     return (
-      <div style={{height: '650px', marginLeft: '200px'}}>
+      <div style={{height: '650px'}}>
+        <div style={{height: '500px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
@@ -216,6 +218,7 @@ class CreateReportView extends Component {
           }
 
         </MuiThemeProvider>
+      </div>
       </div>
     )
   }

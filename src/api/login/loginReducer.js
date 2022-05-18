@@ -1,6 +1,9 @@
 import { DELETE_CURRENT_USER, SUCCESS, FAILURE, LOGIN, GET_DRIVERS } from './loginActions'
 import { LOGIN_INVALID_CREDENTIALS } from './loginProperties'
 import {CHANGE_USER_TO_BUSY} from "../task/taskActions";
+import setAuthorizationToken from "../../utils/setAuthorizationToken";
+import jwt from 'jsonwebtoken'
+import isEmpty from 'lodash/isEmpty';
 
 const initialState = {
     isAuthenticated: false,
@@ -16,18 +19,48 @@ const loginReducer = (state = initialState, action = {}) => {
 
       let message = action.error.message;
       return {
-        ...state,
         isAuthenticated: false,
         user: {errors: message}
       };
 
     case LOGIN + SUCCESS:
+      const token = action.response.result.jwt;
+      const userID = action.response.result.userID;
+      const userStatus = action.response.result.userStatus;
+      if (token) {
+        localStorage.setItem('userID', userID);
+        localStorage.setItem('jwtToken', token);
+        localStorage.setItem('userStatus', userStatus);
+        setAuthorizationToken(token);
+        const user = jwt.decode(token);
+        user["username"] = user.sub;
+        user["id"] = user.jti;
+        return {
+          isAuthenticated: true,
+          user: {...action.response.result}
+        }
+      }
+      return state;
+
+    case "SET_CURRENT_USER_FROM_TOKEN":
+      const user = jwt.decode(localStorage.jwtToken);
+      user["username"] = user.sub;
+      user["id"] = user.jti;
+      if (user.sub && user.sub === 'admin@gmail.com') {
+        user["userRole"] = "ADMIN";
+      } else {
+        user["userRole"] = "USER";
+      }
+      const id = localStorage.userID;
+      const status = localStorage.userStatus;
+      user["userID"] = id;
+      user["userStatus"] = status;
 
       return {
-        ...state,
-        isAuthenticated: true,
-        user: {...action.response.result}
-      };
+        isAuthenticated: isEmpty(user.errors),
+        user: user
+      }
+      return state;
 
     case GET_DRIVERS + FAILURE:
       return  {
@@ -42,11 +75,11 @@ const loginReducer = (state = initialState, action = {}) => {
       };
 
     case DELETE_CURRENT_USER:
-
+      localStorage.removeItem('jwtToken');
+      setAuthorizationToken(false);
       return {
-        ...state,
         isAuthenticated: false,
-        user: {}
+        user: {  }
       };
 
     case CHANGE_USER_TO_BUSY:
