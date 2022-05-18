@@ -218,12 +218,11 @@ class NavigationBarLayout extends Component {
         const userAppBar = (
             <div>
                 <MuiThemeProvider>
-
                     <AppBar
                         /*title={<img src={require('./img/navigationBarLayout/OrangeryLogo.png')}/>}
                         titleStyle={{color: '#000000', fontSize: '18px'}}*/
                         title='Project management system'
-                        style={{backgroundColor: '#ffffff', zIndex: 990}}
+                        style={{backgroundColor: 'aliceblue', zIndex: 990}}
                         titleStyle={{color: '#02162c'}}
                         iconElementLeft={
                             <IconButton iconStyle={{fill: '#000000'}}>
@@ -232,8 +231,7 @@ class NavigationBarLayout extends Component {
                         }
                         onLeftIconButtonClick={this.toggleDrawer}
                         children={
-
-                            <Toolbar style={{backgroundColor: '#ffffff'}}>
+                            <Toolbar style={{backgroundColor: 'aliceblue'}}>
                                 <ToolbarGroup>
                                     <ToolbarSeparator/>
                                     <IconButton iconStyle={{fill: '#000000'}} onClick={this.logout}>
@@ -241,8 +239,6 @@ class NavigationBarLayout extends Component {
                                     </IconButton>
                                 </ToolbarGroup>
                             </Toolbar>
-
-
                         }
                     >
                     </AppBar>
@@ -255,7 +251,7 @@ class NavigationBarLayout extends Component {
                 <AppBar
                     //title={<img src={require('./img/navigationBarLayout/OrangeryLogo.png')}/>}
                     title='Project management system'
-                    style={{backgroundColor: '#ffffff', zIndex: 990}}
+                    style={{backgroundColor: 'aliceblue', zIndex: 990}}
                     titleStyle={{color: '#02162c'}}
                     iconElementLeft={
                         <IconButton iconStyle={{fill: '#000000'}}>
@@ -264,7 +260,7 @@ class NavigationBarLayout extends Component {
                     }
                     onLeftIconButtonClick={this.toggleDrawer}
                     children={
-                        <Toolbar style={{backgroundColor: '#ffffff'}}>
+                        <Toolbar style={{backgroundColor: 'aliceblue'}}>
                             <ToolbarGroup>
                                 <ToolbarSeparator/>
                                 <IconMenu

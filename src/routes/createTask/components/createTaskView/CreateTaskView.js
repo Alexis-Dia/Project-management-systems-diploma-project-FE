@@ -4,11 +4,21 @@ import './CreateTaskView.scss'
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from '@material-ui/core/styles';
-import { VIEW_TASKS_PAGE_PATH } from "../../../../properties/properties";
+import {
+  DATE_TIME_FORMAT_DEFAULT,
+  DATE_TIME_MASK,
+  UTC_FORMAT,
+  VIEW_TASKS_PAGE_PATH
+} from "../../../../properties/properties";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {CREATE_TASK, TASK_WAS_SUCCESSFULLY_CREATED} from "../../../../api/task/taskActions";
+import {CREATE_TASK, GET_TASKS, TASK_WAS_SUCCESSFULLY_CREATED} from "../../../../api/task/taskActions";
 import {browserHistory} from "react-router";
+import {GET_PROJECTS} from "../../../../api/project/projectActions";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import {DateTimePicker} from "material-ui-pickers";
+import moment from "moment";
 
 const styles = theme => ({
   root: {
@@ -31,6 +41,8 @@ class CreateTaskView extends Component {
       distance: null,
       weight: null,
       reward: null,
+      project: [],
+      departure: null,
     }
   }
 
@@ -51,6 +63,12 @@ class CreateTaskView extends Component {
   }
 
   componentDidMount() {
+    if(this.props.auth.user.userRole === 'ADMIN') {
+      this.props.getProjects({
+        data: {page: "0", size: "10"},
+        credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+      });
+    }
   }
 
   componentWillReceiveProps(nextprops) {
@@ -58,32 +76,49 @@ class CreateTaskView extends Component {
         nextprops.flashMessages.map((msg) => {if (msg.text === TASK_WAS_SUCCESSFULLY_CREATED) {
         browserHistory.push(VIEW_TASKS_PAGE_PATH)}});
     }
+    if (nextprops.auth !== this.props.auth) {
+      if (nextprops.auth.isAuthenticated) {
+         if(nextprops.auth.user.userRole === 'ADMIN') {
+          this.props.getProjects({
+            data: {page: "0", size: "10"},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+        }
+      }
+      this.setState({auth: nextprops.auth});
+    }
+    console.log("nextprops.project = ", nextprops.project)
+    if (nextprops.project && nextprops.project !== this.props.project) {
+      console.log("nextprops.project = ", nextprops.project)
+      this.setState({projects: nextprops.project});
+    }
   }
+
+  onChangeProject  = (e) => {
+    this.setState({ projectId: e.target.value});
+  };
 
   onChangeName  = (e) => {
     this.setState({name: e.target.value});
   };
 
-  onChangeDistance  = (e) => {
-    this.setState({distance: e.target.value});
+  onChangeComment  = (e) => {
+    this.setState({comment: e.target.value});
   };
 
-  onChangeWeight  = (e) => {
-    this.setState({weight: e.target.value});
-  };
-
-  onChangeReward  = (e) => {
-    this.setState({reward: e.target.value});
+  onChangeDeparture  = (e) => {
+    let departure = new Date(e);
+    let departureToUTC = moment(departure).format(UTC_FORMAT);
+    this.setState({departure: departureToUTC});
   };
 
   saveTask = () => {
-
     this.props.createTask({
+      projectId: this.state.projectId,
       data: {
         name: this.state.name,
-        summaryDistance: this.state.distance,
-        weight: this.state.weight,
-        reward: this.state.reward,
+        comment: this.state.comment,
+        createDate: this.state.departure
       },
       credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
     });
@@ -99,8 +134,25 @@ class CreateTaskView extends Component {
               (
                   <div style={{width: '800px'}}>
                     <Grid container spacing={0}>
+
                       <Grid item xs={12}>
                         <div style={{textAlign: 'center'}}> <h4>Create new task</h4></div>
+                      </Grid>
+
+                      <Grid item xs={12} sm={3}>
+                        <div className={classes.paper}>Select project</div>
+                      </Grid>
+                      <Grid item xs={12} sm={9}>
+                        <div className={classes.paper} style={{borderColor: '#43434'}}>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            onChange={this.onChangeProject}
+                            style={{width: "200px", display: "block", marginLeft: "20px"}}
+                          >
+                            {this.props.project.map(project => <MenuItem  key={project.id} value={project.id}>{project.name}</MenuItem>)}
+                          </Select>
+                        </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
@@ -109,62 +161,59 @@ class CreateTaskView extends Component {
                       <Grid item xs={12} sm={9}>
                         <div className={classes.paper} style={{borderColor: '#43434'}}>
                           <TextField
-                              underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
-                              style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeName}
-                              name='weight'
+                            underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
+                            style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
+                            onChange={this.onChangeName}
+                            name='priority'
                           />
                         </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Summary distance</div>
+                        <div className={classes.paper}>Comment</div>
                       </Grid>
                       <Grid item xs={12} sm={9}>
                         <div className={classes.paper} style={{borderColor: '#43434'}}>
                           <TextField
-                              type="number"
-                              underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
-                              style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeDistance}
-                              name='weight'
+                            type="string"
+                            underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
+                            style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
+                            onChange={this.onChangeComment}
+                            name='comment'
                           />
                         </div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Weight</div>
+                        <div className={classes.paper}>Create date</div>
                       </Grid>
                       <Grid item xs={12} sm={9}>
-                        <div className={classes.paper} style={{borderColor: '#43434'}}>
-                          <TextField
-                              type="number"
-                              underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
-                              style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeWeight}
-                              name='weight'
+                        <React.Fragment className={classes.paper} style={{borderColor: '#43434'}}>
+                          <DateTimePicker
+                            name="departure"
+                            showTabs={true}
+                            autoSubmit={false}
+                            ampm={false}
+                            keyboard
+                            format={DATE_TIME_FORMAT_DEFAULT}
+                            mask={DATE_TIME_MASK}
+                            value={this.state.departure}
+                            style={{
+                              width: '200px',
+                              margin: '16px 50px 0px 50px',
+                            }}
+                            showTodayButton
+                            okLabel="Ok"
+                            cancelLabel="Cancel"
+                            todayLabel="Today"
+                            onChange={this.onChangeDeparture}
                           />
-                        </div>
-                      </Grid>
-
-                      <Grid item xs={12} sm={3}>
-                        <div className={classes.paper}>Reward</div>
-                      </Grid>
-                      <Grid item xs={12} sm={9}>
-                        <div className={classes.paper} style={{borderColor: '#43434'}}>
-                          <TextField
-                              type="number"
-                              underlineStyle={{borderColor: '#1eb1da', color: '#1eb1da'}}
-                              style={{width: '200px', marginTop: '-10px', marginLeft: '-300px'}}
-                              onChange={this.onChangeReward}
-                              name='weight'
-                          />
-                        </div>
+                        </React.Fragment>
                       </Grid>
 
                     </Grid>
                     <div style={{marginLeft: '175px', marginTop: '30px'}}>
-                      {this.state.name && this.state.distance && this.state.weight && this.state.reward &&
+                      {this.state.projectId && this.state.name && this.state.departure && this.state.comment &&
                       <Button variant="contained" color="primary" onClick={this.saveTask}>
                         Add task
                       </Button>
@@ -188,12 +237,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth || {},
     flashMessages: state.flashMessages || {},
+    project: state.project.list || [],
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     createTask: (data) => dispatch({type: CREATE_TASK, data}),
+    getProjects: (data) => dispatch({type: GET_PROJECTS, data}),
   }
 };
 

@@ -105,10 +105,6 @@ class ReportsView extends Component {
                                 <TableHead>
                                   <TableRow>
                                     <TableCell>Id</TableCell>
-                                    <TableCell numeric>Departure</TableCell>
-                                    <TableCell numeric>Weight</TableCell>
-                                    <TableCell numeric>Distance</TableCell>
-                                    <TableCell numeric>Arrival</TableCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -118,10 +114,6 @@ class ReportsView extends Component {
                                           <TableCell component="th" scope="row">
                                             {report.id}
                                           </TableCell>
-                                          <TableCell numeric>{report.departure}</TableCell>
-                                          <TableCell numeric>{report.weight}</TableCell>
-                                          <TableCell numeric>{report.distance}</TableCell>
-                                          <TableCell numeric>{report.arrival}</TableCell>
                                         </TableRow>
                                     );
                                   })}
@@ -132,30 +124,28 @@ class ReportsView extends Component {
                         )
                             :
                         (
-                           <Paper className={classes.root}>
+                          <Paper className={classes.root}>
                             <TableContainer className={classes.container} style={{maxHeight: '640px'}}>
                               <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
                                   <TableRow>
                                     <TableCell>Id</TableCell>
-                                    <TableCell numeric>Departure</TableCell>
-                                    <TableCell numeric>Weight</TableCell>
-                                    <TableCell numeric>Distance</TableCell>
-                                    <TableCell numeric>Arrival</TableCell>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Comment</TableCell>
+                                    <TableCell>Create date</TableCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
                                   {this.state.reports && this.state.reports.map(report => {
                                     return (
-                                        <TableRow key={report.id}>
-                                          <TableCell component="th" scope="row">
-                                            {report.id}
-                                          </TableCell>
-                                          <TableCell numeric>{report.departure}</TableCell>
-                                          <TableCell numeric>{report.weight}</TableCell>
-                                          <TableCell numeric>{report.distance}</TableCell>
-                                          <TableCell numeric>{report.arrival}</TableCell>
-                                        </TableRow>
+                                      <TableRow key={report.id}>
+                                        <TableCell component="th" scope="row">
+                                          {report.id}
+                                        </TableCell>
+                                        <TableCell numeric>{report.name}</TableCell>
+                                        <TableCell numeric>{report.comment}</TableCell>
+                                        <TableCell numeric>{report.createDate}</TableCell>
+                                      </TableRow>
                                     );
                                   })}
                                 </TableBody>

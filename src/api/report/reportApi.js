@@ -8,7 +8,7 @@ import {
 } from "../../properties/properties";
 
 export function fetchReports (ob) {
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_ALL_REPORTS, GET, ob.data.data, ob.data.credentials)
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_GET_ALL_REPORTS, POST, ob.data.data, ob.data.credentials)
 }
 
 export function fetchReportsById(ob) {
@@ -17,7 +17,8 @@ export function fetchReportsById(ob) {
 }
 
 export function createNewReport(ob) {
-  let taskId = ob.data.data.taskId;
-  let body = {data: ob.data.data.report};
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_POST_CREATE_REPORT + taskId, POST, body, ob.data.credentials)
+  let taskId = ob.data.taskId;
+  let body1 = {data: ob.data.data};
+  let body2 = {data: ob.data.data.data};
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_POST_CREATE_REPORT + taskId, POST, ob.data, ob.data.credentials)
 }

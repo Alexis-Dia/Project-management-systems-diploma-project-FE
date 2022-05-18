@@ -18,10 +18,11 @@ export const PATH_METHOD_GET_ALL_FREE_CARS = '/car/allFree';
 export const PATH_METHOD_POST_CREATE_NEW_CAR = '/car/addNew';
 export const PATH_METHOD_GET_ALL_BRANDS = '/brand/all';
 
-export const PATH_METHOD_GET_ALL_TASKS = '/task/all';
-export const PATH_METHOD_GET_MINE_TASKS = '/task/loadAllMine';
+export const PATH_METHOD_GET_ALL_TASKS = '/task/load';
+export const PATH_METHOD_GET_MINE_TASKS_IN_PROGRESS = '/task/loadAllMineInProgress';
+export const PATH_METHOD_GET_MINE_TASKS_NEW = '/task/loadAllMineNew';
 export const PATH_METHOD_GET_FREE_TASKS = '/task/byStatus?taskStatus=FREE';
-export const PATH_METHOD_POST_CREATE_TASK = '/task/createNew';
+export const PATH_METHOD_POST_CREATE_TASK = '/task/createTask/';
 export const PATH_METHOD_TAKE_TASK = '/task/takeTask';
 export const PATH_METHOD_CHANGE_TASK_STATUS_TO_VALIDATED = '/task/changeTaskStatusToValidated';
 export const PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED = '/task/changeTaskStatusToFinish';
@@ -34,7 +35,7 @@ export const PATH_METHOD_TAKE_PROJECT = '/project/takeProject';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_VALIDATED = '/task/changeProjectStatusToValidated';
 export const PATH_METHOD_CHANGE_PROJECT_STATUS_TO_FINISHED = '/task/changeProjectStatusToFinish';
 
-export const PATH_METHOD_GET_ALL_REPORTS = '/report/all';
+export const PATH_METHOD_GET_ALL_REPORTS = '/report/load';
 export const PATH_METHOD_GET_REPORTS_BY_TASK_ID = '/report/getByTaskId?taskId=';
 export const PATH_METHOD_POST_CREATE_REPORT = '/report/createReport/';
 

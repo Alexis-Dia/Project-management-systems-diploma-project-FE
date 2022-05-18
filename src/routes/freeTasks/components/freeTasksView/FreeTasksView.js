@@ -17,6 +17,7 @@ import Select from "@material-ui/core/Select";
 import {GET_ALL_FREE_CARS} from "../../../../api/car/carActions";
 import {browserHistory} from "react-router";
 import {VIEW_TASKS_PAGE_PATH} from "../../../../properties/properties";
+import Link from "react-router/lib/Link";
 
 const styles = theme => ({
   root: {
@@ -61,10 +62,11 @@ class FreeTasksView extends Component {
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
       this.props.getFreeTasks({
-        data: {},
+        data: {id: this.props.auth.user.id},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
-      this.props.getAllFreeCars({
+    } else if(this.props.auth.user.userRole === 'ADMIN') {
+      this.props.getFreeTasks({
         data: {},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
@@ -90,11 +92,12 @@ class FreeTasksView extends Component {
       if (nextprops.auth.isAuthenticated) {
         if (nextprops.auth.user.userRole === 'USER') {
           this.props.getFreeTasks({
-            data: {},
+            data: {id: nextprops.auth.user.id},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
-          this.props.getAllFreeCars({
-            data: {},
+        } else if(nextprops.auth.user.userRole === 'ADMIN') {
+          this.props.getFreeTasks({
+            data: {id: nextprops.auth.user.id},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
         }
@@ -103,10 +106,6 @@ class FreeTasksView extends Component {
     }
     if (nextprops.task && nextprops.task !== this.props.task) {
       this.setState({tasks: nextprops.task});
-    }
-    if (nextprops.flashMessages !== this.props.flashMessages) {
-      nextprops.flashMessages.map((msg) => {if (msg.text === TASK_WAS_SUCCESSFULLY_ASSIGNED) {
-        browserHistory.push(VIEW_TASKS_PAGE_PATH)}});
     }
   }
 
@@ -123,49 +122,57 @@ class FreeTasksView extends Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Id</TableCell>
-                          <TableCell>Summary distance</TableCell>
-                          <TableCell>Weight</TableCell>
-                          <TableCell>Driver</TableCell>
-                          <TableCell>Car</TableCell>
-                          <TableCell>Task status</TableCell>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Number of reports</TableCell>
-                          <TableCell>Reward</TableCell>
-                          <TableCell></TableCell>
+                          <TableCell numeric>Task status</TableCell>
+                          <TableCell numeric>Name</TableCell>
+                          <TableCell numeric>Number of reports</TableCell>
+                          <TableCell numeric>Comment</TableCell>
+                          <TableCell numeric></TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {this.state.tasks && this.state.tasks.map(task => {
                           return (
-                              <TableRow key={task.id}>
-                                <TableCell component="th" scope="row">
-                                  {task.id}
-                                </TableCell>
-                                <TableCell>{task.summaryDistance}</TableCell>
-                                <TableCell>{task.weight}</TableCell>
-                                {task.taskStatus !== 'FREE' ? (<TableCell>{task.driver.lastName + ' ' + task.driver.firstName + ', ID is ' + task.driver.userID}</TableCell>) : (<TableCell></TableCell>)}
-                                <TableCell>
-                                  <Select
-                                      labelId="demo-simple-select-label"
-                                      id="demo-simple-select"
-                                      onChange={(e) => {this.onChoseCar(e, task.id)}}
-                                      style={{width: "200px"}}
-                                  >
-                                    {this.props.freeCar.map(car => <MenuItem  key={car.id} value={car.id}>{car.number}</MenuItem>)}
-                                  </Select>
-                                </TableCell>
-                                <TableCell>{task.taskStatus}</TableCell>
-                                <TableCell>{task.name}</TableCell>
-                                {task.taskStatus !== 'FREE' ? (<TableCell>{task.reports.length}</TableCell>) : (<TableCell></TableCell>)}
-                                <TableCell>{task.reward}</TableCell>
-                                <TableCell>{(this.state.chosenTaskId === task.id) && (
-                                    <div>
-                                      <Button variant="contained" color="primary" onClick={this.takeTask}>
-                                        Take task
-                                      </Button>
-                                    </div>)
-                                }</TableCell>
-                              </TableRow>
+                            <TableRow key={task.id}>
+                              <TableCell component="th" scope="row">
+                                {task.id}
+                              </TableCell>
+                              <TableCell numeric>{task.status}</TableCell>
+                              <TableCell numeric>{task.name}</TableCell>
+                              {/* {task.taskStatus !== 'FREE' ? (<TableCell numeric onClick={() => this.goToReportsByTaskId(task.id)}>{task.reports.length}</TableCell>) : (<TableCell numeric></TableCell>)}*/}
+                              {task.taskStatus !== 'FREE' ? (<TableCell numeric>
+                                <Link to={`/reports/${task.id}`}>
+                                  {task.reports.length}
+                                </Link>
+                              </TableCell>) : (<TableCell numeric></TableCell>)}
+                              <TableCell>{task.comment}</TableCell>
+                              <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.taskStatus === 'IN_PROGRESS' && task.reports.length > 0) ?
+                                (
+                                  <div>
+                                    <Button variant="contained" color="primary" onClick={() => {this.finishTaskByDriver(task.id)}}>
+                                      Finish task
+                                    </Button>
+                                  </div>
+                                ) :
+                                (
+                                  (auth.user.userRole === 'ADMIN' && (
+                                      (task.taskStatus === 'VALIDATING' &&
+                                        (
+                                          <div>
+                                            <Button variant="contained" color="primary" onClick={() => {this.finishTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
+                                              Approve
+                                            </Button>
+                                            <Button variant="contained" color="secondary" onClick={() => {this.rejectTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
+                                              Reject
+                                            </Button>
+                                          </div>
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              }
+                              </TableCell>
+                            </TableRow>
                           );
                         })}
                       </TableBody>

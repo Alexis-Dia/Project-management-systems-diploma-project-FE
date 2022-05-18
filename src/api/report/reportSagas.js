@@ -59,6 +59,7 @@ export function * reportsByIdFetch () {
 
 
 export function fetchCreateNewReport (data) {
+  console.log("2")
     return createNewReport(data)
         .then(data => {
             return { response: data }
@@ -69,6 +70,7 @@ export function fetchCreateNewReport (data) {
 }
 
 export function * tryFetchCreateNewReport (data) {
+    console.log("1")
     const { response } = yield call(fetchCreateNewReport, data);
      if (response.httpStatus === 200) {
          yield put({type: ADD_FLASH_MESSAGE, data: {type: "success", text: REPORT_WAS_SUCCESSFULLY_ADDED}});

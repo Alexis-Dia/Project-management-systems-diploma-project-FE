@@ -82,7 +82,6 @@ class CreateProjectView extends Component {
   };
 
   saveProject = () => {
-
     this.props.createProject({
       data: {
         name: this.state.name,

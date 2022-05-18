@@ -10,7 +10,7 @@ export default class FooterView extends Component {
         <div>
           <div className='footer-1'>
             <div></div>
-            <div className='footer-1-column'><small>© 2020. Coded by Alexey D.</small></div>
+            <div className='footer-1-column'><small>© 2022. Coded by Alexey D.</small></div>
             <div></div>
           </div>
           <div className='footer-2'>
