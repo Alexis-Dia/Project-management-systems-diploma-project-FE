@@ -99,7 +99,7 @@ class CreateProjectView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px'}}>
+      <div style={{height: '650px', marginTop: '75px'}}>
         <div style={{height: '600px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated && auth.user.userRole === 'ADMIN' ?

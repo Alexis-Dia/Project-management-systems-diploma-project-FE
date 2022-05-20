@@ -131,7 +131,7 @@ class CreateReportView extends Component {
 
 
     return (
-      <div style={{height: '650px'}}>
+      <div style={{height: '650px', marginTop: '75px'}}>
         <div style={{height: '500px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?

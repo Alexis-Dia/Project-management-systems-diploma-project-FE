@@ -113,7 +113,7 @@ class SignUpView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px'}}>
+      <div style={{height: '650px', marginTop: '75px'}}>
       <div style={{height: '630px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {/*{!auth.isAuthenticated ?*/}
