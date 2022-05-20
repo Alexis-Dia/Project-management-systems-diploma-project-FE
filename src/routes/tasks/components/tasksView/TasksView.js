@@ -93,10 +93,20 @@ class TasksView extends Component {
   }
 
   finishTaskByDriver = (id) => {
-    this.props.validateTask({
+    this.props.finishTask({
       data: {
         taskId: id,
-        statusId: 3
+        status: "FINISHED"
+      },
+      credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+    });
+  };
+
+  onHoldTaskByDriver = (id) => {
+    this.props.finishTask({
+      data: {
+        taskId: id,
+        status: "ON_HOLD"
       },
       credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
     });
@@ -126,7 +136,7 @@ class TasksView extends Component {
     const {classes, auth} = this.props;
 
     return (
-        <div style={{height: '650px', marginLeft: '200px', marginTop: '75px'}}>
+        <div style={{height: '650px', marginLeft: '225px', marginTop: '80px'}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
@@ -135,11 +145,11 @@ class TasksView extends Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Id</TableCell>
-                          <TableCell numeric>Task status</TableCell>
-                          <TableCell numeric>Name</TableCell>
-                          <TableCell numeric>Number of reports</TableCell>
-                          <TableCell numeric>Comment</TableCell>
-                          <TableCell numeric></TableCell>
+                          <TableCell>Task status</TableCell>
+                          <TableCell>Name</TableCell>
+                          <TableCell>Number of reports</TableCell>
+                          <TableCell>Comment</TableCell>
+                          <TableCell>Action</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -152,17 +162,24 @@ class TasksView extends Component {
                                 <TableCell numeric>{task.status}</TableCell>
                                 <TableCell numeric>{task.name}</TableCell>
                                {/* {task.taskStatus !== 'FREE' ? (<TableCell numeric onClick={() => this.goToReportsByTaskId(task.id)}>{task.reports.length}</TableCell>) : (<TableCell numeric></TableCell>)}*/}
-                                {task.taskStatus !== 'FREE' ? (<TableCell numeric>
-                                  <Link to={`/reports/${task.id}`}>
-                                    {task.reports.length}
-                                  </Link>
+                                {task.status !== 'FREE' ? (<TableCell numeric>
+                                  {task && task.reports && task.reports.length && task.reports.length > 0 ?
+                                    <Link to={`/reports/${task.id}`}>
+                                      {task.reports.length}
+                                    </Link>
+                                    :
+                                    <Link></Link>
+                                  }
                                 </TableCell>) : (<TableCell numeric></TableCell>)}
                                 <TableCell>{task.comment}</TableCell>
-                                <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.taskStatus === 'IN_PROGRESS' && task.reports.length > 0) ?
+                                <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.status === 'IN_PROGRESS' && task.reports.length > 0) ?
                                     (
                                         <div>
-                                          <Button variant="contained" color="primary" onClick={() => {this.finishTaskByDriver(task.id)}}>
+                                          <Button variant="contained" color="secondary" onClick={() => {this.finishTaskByDriver(task.id)}}>
                                             Finish task
+                                          </Button>
+                                          <Button variant="contained" color="secondary" onClick={() => {this.onHoldTaskByDriver(task.id)}} style={{marginLeft: "15px"}}>
+                                            On hold task
                                           </Button>
                                         </div>
                                     ) :

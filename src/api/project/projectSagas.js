@@ -6,7 +6,7 @@ import {
     createProject,
     updateProjectApi,
     updateProjectToValidateStatusApi,
-    updateProjectToFinishStatusApi
+    updateProjectToFinishStatusApi, addUserToProject, removeUserFromProject
 } from "./projectApi";
 import {
     SUCCESS,
@@ -21,7 +21,13 @@ import {
     PROJECT_WAS_SUCCESSFULLY_ASSIGNED,
     CHANGE_USER_TO_BUSY,
     VALIDATE_PROJECT,
-    PROJECT_WAS_SUCCESSFULLY_MOVED_TO_VALIDATING_STATUS, FINISH_PROJECT, PROJECT_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN
+    PROJECT_WAS_SUCCESSFULLY_MOVED_TO_VALIDATING_STATUS,
+    FINISH_PROJECT,
+    PROJECT_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN,
+    USER_WAS_SUCCESSFULLY_ADDED_TO_THE_PROJECT,
+    ADD_USER_TO_THE_PROJECT,
+    REMOVE_USER_FROM_THE_PROJECT,
+    USER_WAS_SUCCESSFULLY_REMOVED_FROM_THE_PROJECT
 } from './projectActions'
 import {ADD_FLASH_MESSAGE, DELETE_BY_VALUE_FLASH_MESSAGES} from "../flash/flashActions";
 import {delay} from "redux-saga";
@@ -124,7 +130,6 @@ export function * newProjectSaga (data) {
         yield delay(3000, true);
         yield put({type: DELETE_BY_VALUE_FLASH_MESSAGES, data: PROJECT_WAS_SUCCESSFULLY_CREATED})
     }
-
 }
 
 export function * createNewProjectSaga () {
@@ -209,3 +214,55 @@ export function * updateProjectToFinishStatusSaga () {
     yield takeEvery(FINISH_PROJECT, tryUpdateProjectToFinishStatus)
 }
 
+export function addUserToProjectApi (data) {
+    return addUserToProject(data)
+      .then(data => {
+          return { response: data }
+      })
+      .catch(err => {
+          return err
+      })
+}
+
+export function * addUserToProjectCall (data) {
+    const { response } = yield call(addUserToProjectApi, data);
+    if (response.httpStatus === 200) {
+        yield put({type: ADD_FLASH_MESSAGE, data: {type: "success", text: USER_WAS_SUCCESSFULLY_ADDED_TO_THE_PROJECT}});
+        yield put({ type: ADD_USER_TO_THE_PROJECT + SUCCESS, response })
+        yield delay(5000, true);
+        yield put({type: DELETE_BY_VALUE_FLASH_MESSAGES, data: USER_WAS_SUCCESSFULLY_ADDED_TO_THE_PROJECT})
+    } else {
+        yield put({ type: ADD_USER_TO_THE_PROJECT + FAILURE, error })
+    }
+}
+
+export function * addUserToProjectSaga () {
+    yield takeEvery(ADD_USER_TO_THE_PROJECT, addUserToProjectCall)
+}
+
+
+export function removeUserFromProjectApi (data) {
+    return removeUserFromProject(data)
+      .then(data => {
+          return { response: data }
+      })
+      .catch(err => {
+          return err
+      })
+}
+
+export function * removeUserFromProjectCall (data) {
+    const { response } = yield call(removeUserFromProjectApi, data);
+    if (response.httpStatus === 200) {
+        yield put({type: ADD_FLASH_MESSAGE, data: {type: "success", text: USER_WAS_SUCCESSFULLY_REMOVED_FROM_THE_PROJECT}});
+        yield put({ type: REMOVE_USER_FROM_THE_PROJECT + SUCCESS, response })
+        yield delay(5000, true);
+        yield put({type: DELETE_BY_VALUE_FLASH_MESSAGES, data: USER_WAS_SUCCESSFULLY_REMOVED_FROM_THE_PROJECT})
+    } else {
+        yield put({ type: REMOVE_USER_FROM_THE_PROJECT + FAILURE, error })
+    }
+}
+
+export function * removeUserFromProjectSaga () {
+    yield takeEvery(REMOVE_USER_FROM_THE_PROJECT, removeUserFromProjectCall)
+}

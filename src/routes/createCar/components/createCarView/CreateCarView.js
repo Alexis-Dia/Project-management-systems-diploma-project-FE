@@ -110,14 +110,14 @@ class CreateCarView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px', marginLeft: '200px'}}>
+      <div style={{height: '650px', marginLeft: '225px'}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
                   <div style={{width: '800px'}}>
                     <Grid container spacing={0}>
                       <Grid item xs={12}>
-                        <div style={{textAlign: 'center', marginLeft: '-75px'}}><h4>Create new car</h4></div>
+                        <div style={{textAlign: 'center', marginLeft: '-75px', paddingTop: '10px'}}><h4>Create new car</h4></div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>

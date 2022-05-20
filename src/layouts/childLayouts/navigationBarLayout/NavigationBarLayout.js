@@ -25,7 +25,7 @@ import {
     VIEW_PROJECTS,
     VIEW_FREE_PROJECTS,
     CREATE_PROJECT_PAGE_PATH,
-    VIEW_MY_PROJECTS_PAGE_PATH, VIEW_MY_PROJECTS
+    VIEW_MY_PROJECTS_PAGE_PATH, VIEW_MY_PROJECTS, KPI_PAGE_PATH, KPI, CREATE_NEW_USER
 } from '../../../properties/properties'
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -182,6 +182,24 @@ class NavigationBarLayout extends Component {
         });
     };
 
+    onClickViewKPI = () => {
+        const path = KPI_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: KPI,
+        });
+    };
+
+    onClickSignUp = () => {
+        const path = REGISTARATION_PAGE_PATH;
+        browserHistory.push(path);
+        this.toggleDrawer();
+        this.setState({
+            currentPage: CREATE_NEW_USER,
+        });
+    };
+
     setLanguage = (event, child) => {
         localStorage.removeItem(I18);
         localStorage.setItem(I18, event.target.innerText);
@@ -196,6 +214,7 @@ class NavigationBarLayout extends Component {
         this.props.logout();
         this.props.deleteAllFlashMessages();
         this.props.deleteTasks();
+        browserHistory.push(EMPTY_PAGE_PATH);
     };
 
 
@@ -414,7 +433,7 @@ class NavigationBarLayout extends Component {
                                                                     )
                                                                 }*/}
 
-                                                                {
+                                                                {userStatus === 'BUSY' && (
                                                                 (this.props.location.pathname === ADD_REPORT_PAGE_PATH)
                                                                     ?
                                                                     (
@@ -427,7 +446,7 @@ class NavigationBarLayout extends Component {
                                                                                   onClick={this.onClickAddReport}/>
                                                                     )
 
-                                                                }
+                                                                    )}
 
                                                             </Menu>
                                                         ) :
@@ -460,6 +479,19 @@ class NavigationBarLayout extends Component {
                                                                     )
                                                                 }
 
+                                                                {(this.props.location.pathname === REGISTARATION_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="Add new user"
+                                                                              onClick={this.onClickSignUp}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="Add new user"
+                                                                              onClick={this.onClickSignUp}/>
+                                                                  )
+                                                                }
+
                                                                 {(this.props.location.pathname === CREATE_PROJECT_PAGE_PATH)
                                                                   ?
                                                                   (
@@ -476,12 +508,12 @@ class NavigationBarLayout extends Component {
                                                                 {(this.props.location.pathname === VIEW_PROJECTS_PAGE_PATH)
                                                                   ?
                                                                   (
-                                                                    <MenuItem primaryText="View all projects"
+                                                                    <MenuItem primaryText="Assign users to projects"
                                                                               onClick={this.onClickAllProjects}
                                                                               style={{backgroundColor: '#FF8F4F'}}/>
                                                                   ) :
                                                                   (
-                                                                    <MenuItem primaryText="View all projects"
+                                                                    <MenuItem primaryText="Assign users to projects"
                                                                               onClick={this.onClickAllProjects}/>
                                                                   )
                                                                 }
@@ -524,6 +556,20 @@ class NavigationBarLayout extends Component {
                                                                                   onClick={this.onClickViewAllReports}/>
                                                                     )
                                                                 }
+
+                                                                {(this.props.location.pathname === KPI_PAGE_PATH)
+                                                                  ?
+                                                                  (
+                                                                    <MenuItem primaryText="KPI"
+                                                                              onClick={this.onClickViewKPI}
+                                                                              style={{backgroundColor: '#FF8F4F'}}/>
+                                                                  ) :
+                                                                  (
+                                                                    <MenuItem primaryText="KPI"
+                                                                              onClick={this.onClickViewKPI}/>
+                                                                  )
+                                                                }
+
                                                             </Menu>
                                                         )
                                                 )

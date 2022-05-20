@@ -1,9 +1,10 @@
 import { DELETE_CURRENT_USER, SUCCESS, FAILURE, LOGIN, GET_DRIVERS } from './loginActions'
 import { LOGIN_INVALID_CREDENTIALS } from './loginProperties'
-import {CHANGE_USER_TO_BUSY} from "../task/taskActions";
+import {CHANGE_USER_TO_BUSY, CHANGE_USER_TO_FREE} from "../task/taskActions";
 import setAuthorizationToken from "../../utils/setAuthorizationToken";
 import jwt from 'jsonwebtoken'
 import isEmpty from 'lodash/isEmpty';
+import {ADD_USER_TO_THE_PROJECT, REMOVE_USER_FROM_THE_PROJECT} from "../project/projectActions";
 
 const initialState = {
     isAuthenticated: false,
@@ -74,6 +75,18 @@ const loginReducer = (state = initialState, action = {}) => {
         list: action.response.result
       };
 
+    case ADD_USER_TO_THE_PROJECT + SUCCESS:
+      return  {
+        ...state,
+        //list: action.response.result
+      };
+
+    case REMOVE_USER_FROM_THE_PROJECT + SUCCESS:
+      return  {
+        ...state,
+        //list: action.response.result
+      };
+
     case DELETE_CURRENT_USER:
       localStorage.removeItem('jwtToken');
       setAuthorizationToken(false);
@@ -86,6 +99,19 @@ const loginReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         user: {...state.user, userStatus: 'BUSY'}
+      };
+
+    case CHANGE_USER_TO_FREE:
+      let optionalParams = action.data.status;
+      let updatedStatus = "";
+      if (optionalParams == "IN_PROGRESS") {
+        updatedStatus = 'BUSY'
+      } else {
+        updatedStatus = 'FREE'
+      }
+      return {
+        ...state,
+        user: {...state.user, userStatus: updatedStatus}
       };
 
     default:

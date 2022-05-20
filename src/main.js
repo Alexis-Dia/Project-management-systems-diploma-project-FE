@@ -18,7 +18,7 @@ let render = () => {
   const App = require('./components/App').default;
   const routes = require('./routes/index').default(store);
   const token = localStorage.jwtToken;
-  setAuthorizationToken("mmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+  //setAuthorizationToken("mmmmmmmmmmmmmmmmmmmmmmmmmmmm");
 
   ReactDOM.render(
     <App store={store} routes={routes} />,

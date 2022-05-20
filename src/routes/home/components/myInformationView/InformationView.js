@@ -5,6 +5,8 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from '@material-ui/core/styles';
+import {ALICEBLUE, CADETBLUE, LIGHT_ORANGE} from "../../../../properties/colors";
+import image from '../../../../../public/about.jpg'
 
 const styles = theme => ({
   root: {
@@ -53,7 +55,8 @@ class InformationView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px', marginLeft: '200px', marginTop: '75px'}}>
+      <div style={{height: '650px', marginLeft: '225px', marginTop: '65px'}}>
+        <div style={{height: '630px', backgroundColor: auth.isAuthenticated ? LIGHT_ORANGE: 'rgba(0, 0, 0, 0)'}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
@@ -112,11 +115,17 @@ class InformationView extends Component {
               )
                   :
               (
-                  <div></div>
+                  <div style={{marginTop: "-50px"}}>
+                    {/*
+                      https://nicepage.com/homepage-design/preview/text-reasons-zara-successful-45867?device=desktop
+                    */}
+                    <img src={image} alt="Italian Trulli" width="1219" height="642"/>
+                  </div>
               )
           }
 
         </MuiThemeProvider>
+        </div>
       </div>
     )
   }

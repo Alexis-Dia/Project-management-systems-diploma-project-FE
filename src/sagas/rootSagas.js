@@ -20,7 +20,7 @@ import {
   createNewProjectSaga,
   updateProjectSaga,
   updateProjectToValidateStatusSaga,
-  updateProjectToFinishStatusSaga
+  updateProjectToFinishStatusSaga, addUserToProjectSaga, removeUserFromProjectSaga
 } from '../api/project/projectSagas';
 
 // Your sagas for this container
@@ -50,5 +50,7 @@ export default function * rootSaga () {
     fork(reportsFetch),
     fork(reportsByIdFetch),
     fork(createNewReportFetch),
+    fork(addUserToProjectSaga),
+    fork(removeUserFromProjectSaga)
   ]
 }

@@ -12,6 +12,7 @@ import CreateTask from './createTask'
 import Reports from './reports'
 import ReportsById from './reportsById'
 import CreateReport from './createReport'
+import Kpi from './kpi'
 import SignUp from './signUp'
 
 import {
@@ -19,7 +20,7 @@ import {
     CREATE_CAR_PAGE_PATH,
     CREATE_PROJECT_PAGE_PATH,
     CREATE_TASK_PAGE_PATH,
-    EMPTY_PAGE_PATH,
+    EMPTY_PAGE_PATH, KPI_PAGE_PATH,
     REPORTS_PAGE_PATH,
     VIEW_ALL_DRIVERS_PAGE_PATH,
     VIEW_CARS_PAGE_PATH,
@@ -122,6 +123,14 @@ export const createRoutes = (store) => ({
                 path        : ADD_REPORT_PAGE_PATH,
                 component   : CoreLayout,
                 indexRoute  : CreateReport,
+                childRoutes : [
+                ]
+            },
+
+            {
+                path        : KPI_PAGE_PATH,
+                component   : CoreLayout,
+                indexRoute  : Kpi,
                 childRoutes : [
                 ]
             },

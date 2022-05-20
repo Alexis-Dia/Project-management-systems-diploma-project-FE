@@ -21,7 +21,9 @@ import {
     TASK_WAS_SUCCESSFULLY_ASSIGNED,
     CHANGE_USER_TO_BUSY,
     VALIDATE_TASK,
-    TASK_WAS_SUCCESSFULLY_MOVED_TO_VALIDATING_STATUS, FINISH_TASK, TASK_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN
+    TASK_WAS_SUCCESSFULLY_MOVED_TO_VALIDATING_STATUS,
+    FINISH_TASK,
+    TASK_WAS_SUCCESSFULLY_FINISHED_BY_USER, CHANGE_USER_TO_FREE
 } from './taskActions'
 import {ADD_FLASH_MESSAGE, DELETE_BY_VALUE_FLASH_MESSAGES} from "../flash/flashActions";
 import {delay} from "redux-saga";
@@ -196,13 +198,14 @@ export function tryUpdateTaskToFinishStatusApi (data) {
 
 export function * tryUpdateTaskToFinishStatus (data) {
     const { response } = yield call(tryUpdateTaskToFinishStatusApi, data);
+    let status = data.data.data.status;
+    let msg = 'Task was successfully moved to the ' + status + '-status by user!'
     if (response.httpStatus === 200) {
-        yield put({type: ADD_FLASH_MESSAGE, data: {type: "success", text: TASK_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN}});
-        yield put({type: CHANGE_USER_TO_BUSY, data: {}});
-        yield delay(3000, true);
-        yield put({type: DELETE_BY_VALUE_FLASH_MESSAGES, data: TASK_WAS_SUCCESSFULLY_VALIDATED_BY_ADMIN})
+        yield put({type: ADD_FLASH_MESSAGE, data: {type: "success", text: msg}});
+        yield put({type: CHANGE_USER_TO_FREE, data: {status}});
+        yield delay(5000, true);
+        yield put({type: DELETE_BY_VALUE_FLASH_MESSAGES, data: msg})
     }
-
 }
 
 export function * updateTaskToFinishStatusSaga () {

@@ -45,5 +45,5 @@ export function updateTaskToValidateStatusApi(ob) {
 
 export function updateTaskToFinishStatusApi(ob) {
   let body = ob.data.data;
-  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED + '?taskId=' + body.taskId + '&statusId=' + body.statusId, PUT, body, ob.data.credentials)
+  return  apiCallForBasicAuth(HOSTNAME, PORT, PATH_METHOD_CHANGE_TASK_STATUS_TO_FINISHED + '?taskId=' + body.taskId + '&status=' + body.status, POST, body, ob.data.credentials)
 }

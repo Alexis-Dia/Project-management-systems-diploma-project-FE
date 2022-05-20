@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {CREATE_PROJECT, PROJECT_WAS_SUCCESSFULLY_CREATED} from "../../../../api/project/projectActions";
 import {browserHistory} from "react-router";
-import {ALICEBLUE} from "../../../../properties/colors";
+import {ALICEBLUE, LIGHTER_CADETBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -100,14 +100,14 @@ class CreateProjectView extends Component {
 
     return (
       <div style={{height: '650px'}}>
-        <div style={{height: '600px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
+        <div style={{height: '600px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated && auth.user.userRole === 'ADMIN' ?
               (
                   <div style={{width: '800px'}}>
                     <Grid container spacing={0}>
                       <Grid item xs={12}>
-                        <div style={{textAlign: 'center'}}> <h4>Create new project</h4></div>
+                        <div style={{textAlign: 'center', paddingTop: '10px'}}> <h4>Create new project</h4></div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>

@@ -103,7 +103,7 @@ class ReportsByIdView extends Component {
     }
 
     return (
-        <div style={{height: '650px', marginLeft: '200px', marginTop: '75px'}}>
+        <div style={{height: '650px', marginLeft: '225px', marginTop: '75px'}}>
           <MuiThemeProvider>
             {isAuthenticated ?
                 (

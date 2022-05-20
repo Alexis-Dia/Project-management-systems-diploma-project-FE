@@ -19,7 +19,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import {DateTimePicker} from "material-ui-pickers";
 import moment from "moment";
-import {ALICEBLUE} from "../../../../properties/colors";
+import {ALICEBLUE, LIGHT_CADETBLUE, LIGHTER_CADETBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -88,9 +88,7 @@ class CreateTaskView extends Component {
       }
       this.setState({auth: nextprops.auth});
     }
-    console.log("nextprops.project = ", nextprops.project)
     if (nextprops.project && nextprops.project !== this.props.project) {
-      console.log("nextprops.project = ", nextprops.project)
       this.setState({projects: nextprops.project});
     }
   }
@@ -130,7 +128,7 @@ class CreateTaskView extends Component {
 
     return (
       <div style={{height: '650px'}}>
-      <div style={{height: '500px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
+      <div style={{height: '500px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated && auth.user.userRole === 'ADMIN' ?
               (
@@ -138,7 +136,7 @@ class CreateTaskView extends Component {
                     <Grid container spacing={0}>
 
                       <Grid item xs={12}>
-                        <div style={{textAlign: 'center'}}> <h4>Create new task</h4></div>
+                        <div style={{textAlign: 'center', paddingTop: '10px'}}> <h4>Create new task</h4></div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>

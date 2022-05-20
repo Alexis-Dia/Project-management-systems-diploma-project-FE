@@ -4,7 +4,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import './FreeTasksView.scss'
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import {ADD_FLASH_MESSAGE} from "../../../../api/flash/flashActions";
-import {GET_FREE_TASK, GET_TASKS, TAKE_TASK, TASK_WAS_SUCCESSFULLY_ASSIGNED} from "../../../../api/task/taskActions";
+import {
+  FINISH_TASK,
+  GET_FREE_TASK,
+  GET_TASKS,
+  TAKE_TASK,
+  TASK_WAS_SUCCESSFULLY_ASSIGNED
+} from "../../../../api/task/taskActions";
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -109,11 +115,21 @@ class FreeTasksView extends Component {
     }
   }
 
+  startTaskByDriver = (id) => {
+    this.props.finishTask({
+      data: {
+        taskId: id,
+        status: "IN_PROGRESS"
+      },
+      credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+    });
+  };
+
   render = () => {
     const {classes, auth} = this.props;
 
     return (
-        <div style={{height: '650px', marginLeft: '200px', marginTop: '75px'}}>
+        <div style={{height: '650px', marginLeft: '225px', marginTop: '80px'}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
@@ -126,7 +142,7 @@ class FreeTasksView extends Component {
                           <TableCell numeric>Name</TableCell>
                           <TableCell numeric>Number of reports</TableCell>
                           <TableCell numeric>Comment</TableCell>
-                          <TableCell numeric></TableCell>
+                          <TableCell numeric>Action</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -139,17 +155,26 @@ class FreeTasksView extends Component {
                               <TableCell numeric>{task.status}</TableCell>
                               <TableCell numeric>{task.name}</TableCell>
                               {/* {task.taskStatus !== 'FREE' ? (<TableCell numeric onClick={() => this.goToReportsByTaskId(task.id)}>{task.reports.length}</TableCell>) : (<TableCell numeric></TableCell>)}*/}
-                              {task.taskStatus !== 'FREE' ? (<TableCell numeric>
-                                <Link to={`/reports/${task.id}`}>
-                                  {task.reports.length}
-                                </Link>
-                              </TableCell>) : (<TableCell numeric></TableCell>)}
+                              {task.taskStatus !== 'FREE' ? (
+                                <TableCell numeric>
+                                  {task && task.reports && task.reports.length && task.reports.length > 0 ?
+                                    <Link to={`/reports/${task.id}`}>
+                                      {task.reports.length}
+                                    </Link>
+                                      :
+                                    <Link></Link>
+                                  }
+                                </TableCell>
+                              ) : (<TableCell numeric></TableCell>)}
                               <TableCell>{task.comment}</TableCell>
-                              <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.taskStatus === 'IN_PROGRESS' && task.reports.length > 0) ?
+                              <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'FREE' &&
+                                (
+                                  task.status === 'FINISHED' || task.status === 'ON_HOLD' || task.status === 'NEW'
+                                )) ?
                                 (
                                   <div>
-                                    <Button variant="contained" color="primary" onClick={() => {this.finishTaskByDriver(task.id)}}>
-                                      Finish task
+                                    <Button variant="contained" color="secondary" onClick={() => {this.startTaskByDriver(task.id)}}>
+                                      Take task
                                     </Button>
                                   </div>
                                 ) :
@@ -205,6 +230,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getAllFreeCars: (data) => dispatch({type: GET_ALL_FREE_CARS, data}),
     getTasks: (data) => dispatch({type: GET_TASKS, data}),
     getFreeTasks: (data) => dispatch({type: GET_FREE_TASK, data}),
+    finishTask: (data) => dispatch({type: FINISH_TASK, data}),
     takeTask: (data) => dispatch({type: TAKE_TASK, data}),
     showFlashMessage: (data) => dispatch({type: ADD_FLASH_MESSAGE, data})
   }

@@ -15,6 +15,7 @@ import {browserHistory} from "react-router";
 import {DateTimePicker} from "material-ui-pickers";
 import moment from "moment";
 import {SIGN_UP, USER_WAS_SUCCESSFULLY_CREATED} from "../../../../api/login/loginActions";
+import {LIGHTER_CADETBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -112,14 +113,16 @@ class SignUpView extends Component {
     const {classes, auth} = this.props;
 
     return (
-      <div style={{height: '650px', marginLeft: '200px'}}>
+      <div style={{height: '650px'}}>
+      <div style={{height: '630px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
-          {!auth.isAuthenticated ?
+          {/*{!auth.isAuthenticated ?*/}
+          {auth.user.userRole === 'ADMIN' ?
               (
                   <div style={{width: '800px'}}>
                     <Grid container spacing={0}>
                       <Grid item xs={12}>
-                        <div style={{textAlign: 'center', marginLeft: '-100px'}}> <h4>Sign Up</h4></div>
+                        <div style={{textAlign: 'center', marginLeft: '-100px', paddingTop: '10px'}}> <h4>Sign Up</h4></div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
@@ -238,6 +241,7 @@ class SignUpView extends Component {
           }
 
         </MuiThemeProvider>
+      </div>
       </div>
     )
   }

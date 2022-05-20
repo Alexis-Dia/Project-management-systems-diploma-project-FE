@@ -18,7 +18,7 @@ import moment from "moment";
 import {SAVE_REPORT} from "../../../../api/report/reportActions";
 import {REPORT_WAS_SUCCESSFULLY_ADDED} from "../../../../api/flash/flashActions";
 import {browserHistory} from "react-router";
-import {ALICEBLUE} from "../../../../properties/colors";
+import {ALICEBLUE, LIGHTER_CADETBLUE} from "../../../../properties/colors";
 
 const styles = theme => ({
   root: {
@@ -93,11 +93,9 @@ class CreateReportView extends Component {
     }
     if (nextprops.task && nextprops.task !== this.props.task) {
       if (nextprops && nextprops.task) {
-        let currentTask = nextprops.task.find(e => e.status === 'In progress');
+        let currentTask = nextprops.task.find(e => e.status === 'IN_PROGRESS');
         this.setState({currentTask: currentTask});
-        console.log("current = ", currentTask)
       }
-      console.log("nextprops.task = ", nextprops.task)
       this.setState({tasks: nextprops.task});
     }
   }
@@ -134,14 +132,14 @@ class CreateReportView extends Component {
 
     return (
       <div style={{height: '650px'}}>
-        <div style={{height: '500px', marginLeft: '200px', width: '700px', backgroundColor: ALICEBLUE}}>
+        <div style={{height: '500px', marginLeft: '225px', width: '700px', backgroundColor: LIGHTER_CADETBLUE}}>
         <MuiThemeProvider>
           {auth.isAuthenticated ?
               (
                   <div style={{width: '700px'}}>
                     <Grid container spacing={0}>
                       <Grid item xs={12}>
-                        <div style={{textAlign: 'center'}}> <h4>Create daily report for current active task - {this.state.currentTask && this.state.currentTask.name}</h4></div>
+                        <div style={{textAlign: 'center', paddingTop: '10px'}}> <h4>Create daily report for current active task - {this.state.currentTask && this.state.currentTask.name}</h4></div>
                       </Grid>
 
                       <Grid item xs={12} sm={3}>

@@ -76,30 +76,48 @@ class DriversView extends Component {
                         <TableRow>
                           <TableCell>Id</TableCell>
                           <TableCell numeric>Name</TableCell>
-                          <TableCell numeric>Birthday</TableCell>
-                          <TableCell numeric>Email</TableCell>
-                          <TableCell numeric>Money</TableCell>
-                          <TableCell numeric>Role</TableCell>
-                          <TableCell numeric>Status</TableCell>
+                          <TableCell numeric>Finished Tasks</TableCell>
+                          <TableCell numeric>All number of repots</TableCell>
+                          <TableCell numeric>Working hours</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {this.state.drivers && this.state.drivers.map(driver => {
+{/*                        {this.state.drivers && this.state.drivers.map(driver => {
                           return (
                               <TableRow key={driver.userID}>
                                 <TableCell component="th" scope="row">
                                   {driver.userID}
                                 </TableCell>
-                                <TableCell numeric>{driver.lastName + ' ' + driver.firstName}</TableCell>
-                                <TableCell numeric>{driver.birthday}</TableCell>
-                                <TableCell numeric>{driver.emailAddress}</TableCell>
-                                <TableCell numeric>{driver.money}</TableCell>
-                                <TableCell numeric>{driver.userRole}</TableCell>
-                                <TableCell numeric>{driver.userStatus}</TableCell>
+                                <TableCell>{driver.lastName + ' ' + driver.firstName}</TableCell>
+                                <TableCell>{driver.emailAddress}</TableCell>
+                                <TableCell>{driver.money}</TableCell>
+                                <TableCell>{driver.userRole}</TableCell>
+                                <TableCell>{driver.userStatus}</TableCell>
                               </TableRow>
                           );
-                        })}
+                        })}*/}
+                        <TableRow key={1}>
+                          <TableCell component="th" scope="row">{1}</TableCell>
+                          <TableCell>Ivan Ivanov</TableCell>
+                          <TableCell>15</TableCell>
+                          <TableCell>54</TableCell>
+                          <TableCell>178</TableCell>
+                        </TableRow>
+                        <TableRow key={2}>
+                          <TableCell component="th" scope="row">{2}</TableCell>
+                          <TableCell>Sergey Sergeyev</TableCell>
+                          <TableCell>11</TableCell>
+                          <TableCell>18</TableCell>
+                          <TableCell>125</TableCell>
+                        </TableRow>
                       </TableBody>
+                      <TableRow key={3}>
+                        <TableCell component="th" scope="row">{3}</TableCell>
+                        <TableCell>Petr Petrov</TableCell>
+                        <TableCell>9</TableCell>
+                        <TableCell>11</TableCell>
+                        <TableCell>96</TableCell>
+                      </TableRow>
                     </Table>
                   </Paper>
               )
