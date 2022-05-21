@@ -292,9 +292,9 @@ class NavigationBarLayout extends Component {
                                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                     iconStyle={{fill: '#000000', marginTop: '2px'}}
                                 >
-                                    <MenuItem
+{/*                                    <MenuItem
                                         primaryText="Sign Up"
-                                        onClick={this.toggleSignUp}/>
+                                        onClick={this.toggleSignUp}/>*/}
                                     <MenuItem
                                         primaryText="Log In"
                                         onClick={this.toggleLogIn}/>
