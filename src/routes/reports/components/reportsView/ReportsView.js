@@ -17,6 +17,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {GET_PROJECTS} from "../../../../api/project/projectActions";
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,7 @@ class ReportsView extends Component {
     this.state = {
       reports: [],
       auth: null,
+      projects: [],
     }
   }
 
@@ -60,6 +62,10 @@ class ReportsView extends Component {
       data: {},
       credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
     });
+    this.props.getProjects({
+      data: {page: "0", size: "10"},
+      credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+    });
   }
 
   componentWillReceiveProps(nextprops) {
@@ -71,9 +77,25 @@ class ReportsView extends Component {
           credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
         });
       }
+      if (nextprops.auth.isAuthenticated) {
+        if (nextprops.auth.user.userRole === 'USER') {
+          this.props.getMineProjects({
+            data: {id: nextprops.auth.user.userID},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+        } else if(nextprops.auth.user.userRole === 'ADMIN') {
+          this.props.getProjects({
+            data: {page: "0", size: "10"},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+        }
+      }
     }
     if (nextprops.report && nextprops.report !== this.props.report) {
       this.setState({reports: nextprops.report});
+    }
+    if (nextprops.project && nextprops.project !== this.props.project) {
+      this.setState({projects: nextprops.project});
     }
   }
 
@@ -130,23 +152,31 @@ class ReportsView extends Component {
                                 <TableHead>
                                   <TableRow>
                                     <TableCell>Id</TableCell>
-                                    <TableCell>Name</TableCell>
+                                    <TableCell>Project Name</TableCell>
+                                    <TableCell>Task Name</TableCell>
+                                    <TableCell>Report Name</TableCell>
                                     <TableCell>Comment</TableCell>
                                     <TableCell>Create date</TableCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                  {this.state.reports && this.state.reports.map(report => {
-                                    return (
-                                      <TableRow key={report.id}>
-                                        <TableCell component="th" scope="row">
-                                          {report.id}
-                                        </TableCell>
-                                        <TableCell numeric>{report.name}</TableCell>
-                                        <TableCell numeric>{report.comment}</TableCell>
-                                        <TableCell numeric>{report.createDate}</TableCell>
-                                      </TableRow>
-                                    );
+                                  {this.state.projects && this.state.projects.map(proj => {
+                                    return (proj && proj.tasks && proj.tasks.map(task => {
+                                      return (task && task.reports && task.reports.map(report => {
+                                        return (
+                                          <TableRow key={report.id}>
+                                            <TableCell component="th" scope="row">
+                                              {report.id}
+                                            </TableCell>
+                                            <TableCell numeric>{proj.name}</TableCell>
+                                            <TableCell numeric>{task.name}</TableCell>
+                                            <TableCell numeric>{report.name}</TableCell>
+                                            <TableCell numeric>{report.comment}</TableCell>
+                                            <TableCell numeric>{report.createDate}</TableCell>
+                                          </TableRow>
+                                        );
+                                      }))
+                                    }))
                                   })}
                                 </TableBody>
                               </Table>
@@ -172,11 +202,13 @@ const mapStateToProps = (state, ownProps) => {
     auth: state.auth || {},
     flashMessages: state.flashMessages || {},
     report: state.report.list || [],
+    project: state.project.list || [],
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    getProjects: (data) => dispatch({type: GET_PROJECTS, data}),
     getReports: (data) => dispatch({type: GET_REPORTS, data}),
     getReportsByTaskId: (data) => dispatch({type: GET_REPORTS_BY_TASK_ID, data}),
     showFlashMessage: (data) => dispatch({type: ADD_FLASH_MESSAGE, data})

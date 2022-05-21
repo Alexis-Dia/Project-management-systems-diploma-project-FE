@@ -169,7 +169,7 @@ class FreeTasksView extends Component {
                               <TableCell>{task.comment}</TableCell>
                               <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'FREE' &&
                                 (
-                                  task.status === 'FINISHED' || task.status === 'ON_HOLD' || task.status === 'NEW'
+                                  task.status === 'ON_HOLD' || task.status === 'NEW'
                                 )) ?
                                 (
                                   <div>
