@@ -112,7 +112,7 @@ export const createRoutes = (store) => ({
             },
 
             {
-                path        : '/reports/:id',
+                path        : '/reports/:id/:name',
                 component   : CoreLayout,
                 indexRoute  : ReportsById,
                 childRoutes : [

@@ -42,6 +42,7 @@ export function fetchByIdApi (data) {
 }
 
 export function * tryFetchById (data) {
+    console.log("data = ", data)
     const { response, error } = yield call(fetchByIdApi, data);
     if (response.httpStatus === 401) {
         yield put({type: GET_REPORTS + UNAUTHORIZED, response})

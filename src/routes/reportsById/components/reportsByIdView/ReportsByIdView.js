@@ -64,9 +64,13 @@ class ReportsByIdView extends Component {
   }
 
   componentDidMount() {
+    console.log("vvv 1 = ", this.props)
     if (this.props.auth.isAuthenticated && this.props.taskId) {
       this.props.getReportsByTaskId({
-        data: {taskId: this.props.taskId},
+        data: {
+          taskId: this.props.taskId,
+          //taskName: this.props.taskId,
+        },
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
     }
@@ -104,6 +108,9 @@ class ReportsByIdView extends Component {
 
     return (
         <div style={{height: '650px', marginLeft: '225px', marginTop: '75px'}}>
+          <div style={{backgroundColor: '#ffeac4e3'}}>
+            <h3>Reports for '{this.props.taskName}'-task:</h3>
+          </div>
           <MuiThemeProvider>
             {isAuthenticated ?
                 (

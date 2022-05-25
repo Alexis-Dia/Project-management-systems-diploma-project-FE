@@ -9,7 +9,7 @@ export default class MainView extends Component {
     return (
       <div>
         <div className='main-header'>
-          <ReportsByIdView taskId={this.props.params.id}/>
+          <ReportsByIdView taskId={this.props.params.id} taskName={this.props.params.name}/>
           <FooterView />
         </div>
       </div>

@@ -16,7 +16,7 @@ const reportReducer = (state = initialState, action = {}) => {
       };
 
     case GET_REPORTS + SUCCESS:
-
+      console.log("action.response = ", action.response)
       return  {
         ...state,
         list: action.response.result

@@ -17,6 +17,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from "react-router/es/Link";
 import Button from "@material-ui/core/Button";
+import {GET_MINE_PROJECT, GET_PROJECTS} from "../../../../api/project/projectActions";
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,7 @@ class TasksView extends Component {
     this.state = {
       auth: null,
       tasks: [],
+      projects: [],
     }
   }
 
@@ -58,7 +60,12 @@ class TasksView extends Component {
 
   componentDidMount() {
     if (this.props.auth.user.userRole === 'USER') {
+      console.log("77777777777777777777777777777777.3 = ")
       this.props.getMineTasks({
+        data: {id: this.props.auth.user.userID},
+        credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+      });
+      this.props.getMineProjects({
         data: {id: this.props.auth.user.userID},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
@@ -67,14 +74,27 @@ class TasksView extends Component {
         data: {},
         credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
       });
+      this.props.getProjects({
+        data: {page: "0", size: "10"},
+        credentials: {emailAddress: this.props.auth.user.emailAddress, password: this.props.auth.user.password}
+      });
     }
   }
 
   componentWillReceiveProps(nextprops) {
+    console.log("77777777777777777777777777777777.4 = ")
     if (nextprops.auth !== this.props.auth) {
+      console.log("77777777777777777777777777777777.5 = ")
       if (nextprops.auth.isAuthenticated) {
+        console.log("77777777777777777777777777777777.6 = ")
         if (nextprops.auth.user.userRole === 'USER') {
+          console.log("77777777777777777777777777777777.7 = ")
           this.props.getMineTasks({
+            data: {id: nextprops.auth.user.userID},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
+          console.log("nextprops.auth.user.userID = ", nextprops.auth.user.userID)
+          this.props.getMineProjects({
             data: {id: nextprops.auth.user.userID},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
@@ -83,12 +103,19 @@ class TasksView extends Component {
             data: {id: nextprops.auth.user.userID},
             credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
           });
+          this.props.getProjects({
+            data: {page: "0", size: "10"},
+            credentials: {emailAddress: nextprops.auth.user.emailAddress, password: nextprops.auth.user.password}
+          });
         }
       }
       this.setState({auth: nextprops.auth});
     }
     if (nextprops.task && nextprops.task !== this.props.task) {
       this.setState({tasks: nextprops.task});
+    }
+    if (nextprops.project && nextprops.project !== this.props.project) {
+      this.setState({projects: nextprops.project});
     }
   }
 
@@ -145,66 +172,75 @@ class TasksView extends Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Id</TableCell>
+                          <TableCell>Project name</TableCell>
                           <TableCell>Task status</TableCell>
-                          <TableCell>Name</TableCell>
+                          <TableCell>Task Name</TableCell>
                           <TableCell>Number of reports</TableCell>
                           <TableCell>Comment</TableCell>
                           <TableCell>Action</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {this.state.tasks && this.state.tasks.map(task => {
-                          return (
-                              <TableRow key={task.id}>
-                                <TableCell component="th" scope="row">
-                                  {task.id}
-                                </TableCell>
-                                <TableCell numeric>{task.status}</TableCell>
-                                <TableCell numeric>{task.name}</TableCell>
-                               {/* {task.taskStatus !== 'FREE' ? (<TableCell numeric onClick={() => this.goToReportsByTaskId(task.id)}>{task.reports.length}</TableCell>) : (<TableCell numeric></TableCell>)}*/}
-                                {task.status !== 'FREE' ? (<TableCell numeric>
-                                  {task && task.reports && task.reports.length && task.reports.length > 0 ?
-                                    <Link to={`/reports/${task.id}`}>
-                                      {task.reports.length}
-                                    </Link>
-                                    :
-                                    <Link></Link>
-                                  }
-                                </TableCell>) : (<TableCell numeric></TableCell>)}
-                                <TableCell>{task.comment}</TableCell>
-                                <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.status === 'IN_PROGRESS' && task.reports.length > 0) ?
+
+                        {this.state.projects && this.state.projects.map(proj => {
+                          return (proj && proj.tasks && proj.tasks.map(task => {
+
+                              return (
+                                <TableRow key={task.id}>
+                                  <TableCell component="th" scope="row">
+                                    {task.id}
+                                  </TableCell>
+                                  <TableCell>{proj.name}</TableCell>
+                                  <TableCell>{task.status}</TableCell>
+                                  <TableCell>{task.name}</TableCell>
+                                  {task.status !== 'FREE' ? (<TableCell numeric>
+                                    {task && task.reports && task.reports.length && task.reports.length > 0 ?
+                                      <Link to={`/reports/${task.id}/${task.name}`}>
+                                        {task.reports.length}
+                                      </Link>
+                                      :
+                                      <Link></Link>
+                                    }
+                                  </TableCell>) : (<TableCell numeric></TableCell>)}
+                                  <TableCell>{task.comment}</TableCell>
+                                  <TableCell>{(auth.user.userRole === 'USER' && auth.user.userStatus === 'BUSY' && task.status === 'IN_PROGRESS' && task.reports.length > 0) ?
                                     (
-                                        <div>
-                                          <Button variant="contained" color="secondary" onClick={() => {this.finishTaskByDriver(task.id)}}>
-                                            Finish task
-                                          </Button>
-                                          <Button variant="contained" color="secondary" onClick={() => {this.onHoldTaskByDriver(task.id)}} style={{marginLeft: "15px"}}>
-                                            On hold task
-                                          </Button>
-                                        </div>
+                                      <div>
+                                        <Button variant="contained" color="secondary" onClick={() => {this.finishTaskByDriver(task.id)}}>
+                                          Finish task
+                                        </Button>
+                                        <Button variant="contained" color="secondary" onClick={() => {this.onHoldTaskByDriver(task.id)}} style={{marginLeft: "15px"}}>
+                                          On hold task
+                                        </Button>
+                                      </div>
                                     ) :
                                     (
-                                        (auth.user.userRole === 'ADMIN' && (
-                                            (task.taskStatus === 'VALIDATING' &&
-                                                    (
-                                                        <div>
-                                                          <Button variant="contained" color="primary" onClick={() => {this.finishTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
-                                                            Approve
-                                                          </Button>
-                                                            <Button variant="contained" color="secondary" onClick={() => {this.rejectTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
-                                                              Reject
-                                                            </Button>
-                                                        </div>
-                                                    )
+                                      (auth.user.userRole === 'ADMIN' && (
+                                          (task.taskStatus === 'VALIDATING' &&
+                                            (
+                                              <div>
+                                                <Button variant="contained" color="primary" onClick={() => {this.finishTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
+                                                  Approve
+                                                </Button>
+                                                <Button variant="contained" color="secondary" onClick={() => {this.rejectTaskByAdmin(task.id)}} style={{transform: "scale(0.8)"}}>
+                                                  Reject
+                                                </Button>
+                                              </div>
                                             )
                                           )
                                         )
+                                      )
                                     )
                                   }
-                                </TableCell>
-                              </TableRow>
-                          );
+                                  </TableCell>
+
+                                </TableRow>
+                              );
+
+                          }))
                         })}
+
+
                       </TableBody>
                     </Table>
                   </Paper>
@@ -226,11 +262,14 @@ const mapStateToProps = (state, ownProps) => {
     auth: state.auth || {},
     flashMessages: state.flashMessages || {},
     task: state.task.list || [],
+    project: state.project.list || [],
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    getProjects: (data) => dispatch({type: GET_PROJECTS, data}),
+    getMineProjects: (data) => dispatch({type: GET_MINE_PROJECT, data}),
     getTasks: (data) => dispatch({type: GET_TASKS, data}),
     getMineTasks: (data) => dispatch({type: GET_MINE_TASK, data}),
     showFlashMessage: (data) => dispatch({type: ADD_FLASH_MESSAGE, data}),
